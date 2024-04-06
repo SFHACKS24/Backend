@@ -1,7 +1,8 @@
 from flask import Flask, request
 import json
-app= Flask(__name__)
+from llm import checkContent
 
+app= Flask(__name__)
 
 with open('profileQns.json', 'r') as file: #TODO yet to use
     profileQnsBank = json.load(file)
@@ -11,12 +12,9 @@ with open('qnsBank.json', 'r') as file:
 #qnstypes: 0: binary, 1: scaled, 2: text, 3: weightage
 
 numQns= len(qnsBank)
-
-
 nonNegotiableQns=[2]
-
+freeTextQns=[3]
 cookieBank={"cookie":{"userId":"0","qnsId":"0"}}
-
 compatibilityThreshold=10
 
 #number is userId
@@ -33,14 +31,14 @@ def hello_world():
 
 @app.route("/getQuestion", methods=["POST"])
 def getQuestion():
-    data= request.get_json() #change to cookies
+    data= request.get_json() #TODO change to cookies
     cookie= data["cookie"]
     qnsId=0
     if cookie in cookieBank:
         qnsId= cookieBank[cookie]["qnsId"]
         cookieBank[cookie]["qnsId"]= qnsId+1
     if qnsId>= numQns:
-        return "No more questions" #process for leading prompts
+        return "No more questions" #TODO process for leading prompts
     return qnsBank[qnsId]["qns"], qnsBank[qnsId]["type"]
 
 
@@ -52,6 +50,7 @@ def submitAnswer():
     currUserId= cookieBank[cookie]["userId"]
     answer= data["answer"]
     qnsId= data["qnsId"]
+    qnsType= qnsBank[qnsId]["type"]
     maxCompatibilityScore=0
     maxCompatibilityUserId=None
 
@@ -62,9 +61,6 @@ def submitAnswer():
     elif qnsId==1:
         usersStruct["LowWeightage"]=answer
         print("LowWeightage",usersStruct[currUserId]["LowWeightage"])
-    isLong, prompt= checkLength(qnsId,answer) #TODO for particular qns types?
-    if not isLong:
-        return ["1", prompt]
     elif qnsId in nonNegotiableQns: #pop off blacklists
         for user in usersStruct:
             if user!=currUserId and  usersStruct[user]["responses"][str(qnsId)]!=answer:
@@ -80,7 +76,16 @@ def submitAnswer():
         usersStruct[currUserId]["leadingPrompt"]=leadingPrompts
         print(usersStruct[currUserId])
    
-    else: # update score
+    else: # normal qns
+        #isLong, prompt= checkLength(qnsId,answer) #TODO for particular qns types?
+        if qnsType==2:
+            print("free text qns",qnsBank[qnsId]["qns"],answer)
+            response= checkContent(qnsBank[qnsId]["qns"],answer)
+            isLong= response["isEnough"]
+            prompt= response["FollowUpPrompt"]
+            print(isLong, prompt)
+            if not isLong:
+                return ["1", prompt]
         #rank all other users ##TODO!! #yet to do- need examples
         userRankings= getRankings(qnsId, answer)
         for idx, user in enumerate(userRankings):

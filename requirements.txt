@@ -1,1 +1,4 @@
 flask
+langchain
+langchain-openai
+python-dotenv
