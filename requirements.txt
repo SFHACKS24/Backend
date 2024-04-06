@@ -5,3 +5,7 @@ python-dotenv
 openai
 fastembed
 faiss-cpu
+plotly==5.20.0
+pandas
+kaleido
+matplotlib

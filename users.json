@@ -31,11 +31,7 @@
         "LowWeightage": [
             0
         ],
-        "leadingPrompt": [
-            "user0 prompt1",
-            "user0 prompt2",
-            "user0 prompt3"
-        ]
+        "leadingPrompt": []
     },
     "1": {
         "profile": {

@@ -129,11 +129,13 @@ def getDirectRecommendation()-> dict[int, Optional[str]]:
     data= request.get_json()
     cookie= data["cookie"]
     currUserId= cookieBank[cookie]["userId"]
+    if usersStruct[currUserId]["leadingPrompt"].length==0:
+        return jsonify({"qnsType": 4})
     recommendations= getRecommendations(currUserId)
     filteredRecommendations=[]
     for user in recommendations:
         userId= user[0]
-        if user[1]["answerable"]==False:
+        if user[1]["answerable"]==False: #add leading prompts
             return jsonify(({"qnsType": 5, "userId": userId,"content": user[1]["leadingPrompts"]}))
         if user[1]["compatibilityScore"]>=compatibilityThreshold:
             filteredRecommendations.append(user)
