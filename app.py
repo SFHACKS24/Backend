@@ -29,6 +29,23 @@ with open('compatibility.json', 'r') as file:
 def hello_world():
     return jsonify({"message": "Hello, World!"})
 
+#input:list of userIds
+#output: list of dict[**userprofile, compatibilityScore, qnsRanking, answer]
+@app.route("/getUsersInformation",method=["POST"])
+def getUersInformation():
+    data= request.get_json()
+    cookie= data["cookie"]
+    currUserId= cookieBank[cookie]["userId"]
+    userIds=data["userIds"]
+    userInformation=[]
+    for id in userIds:
+        user= usersStruct[id]
+        user["compatibilityScore"]= compatibilitiesStruct[currUserId][id]["compatibilityScore"]
+        user["qnsRanking"]= compatibilitiesStruct[currUserId][id]["qnsRanking"]
+        user["answer"]= compatibilitiesStruct[currUserId][id]["answer"]
+        userInformation.append(user)
+    return jsonify(userInformation)
+
 #qnstypes: 0: binary, 1: scaled, 2: text, 3: weightage, 4: enter your leading prompt, 5: unanswered leading prompt, 6: recommendations 
 #response: {qnsTypes: int, (optional) content: string, (optional)userId: int} TODO if 6, gdluck
 #ONLY 6: [(userId,{qnsRanking: list[int], compatibilityScore: int, answerable: bool, answer: str})]
@@ -50,8 +67,8 @@ def getQuestion()-> dict[int, Optional[str]]:
             userId= user[0]
             if user[1]["answerable"]==False:
                 return jsonify(({"qnsType": 5, "userId": userId,"content": user[1]["leadingPrompts"]}))
-        # print(recommendations)
-        return jsonify({"qnsType": 6, "content": recommendations})
+        onlyRanking= [user[0] for user in recommendations]
+        return jsonify({"qnsType": 6, "content": onlyRanking})
     return jsonify({"qnsType": qnsBank[qnsId]["type"], "content": qnsBank[qnsId]["qns"]})
 
 #statuscodes: 0: success, 1: failure (answer too short), 2: found a higher threshold
@@ -146,7 +163,8 @@ def getDirectRecommendation()-> dict[int, Optional[str]]:
             return jsonify(({"qnsType": 5, "userId": userId,"content": user[1]["leadingPrompts"]}))
         if user[1]["compatibilityScore"]>=compatibilityThreshold:
             filteredRecommendations.append(user)
-    return jsonify({"qnsType": 6, "content": recommendations})
+    onlyRanking= [user[0] for user in recommendations]
+    return jsonify({"qnsType": 6, "content": onlyRanking})
 
 @app.route('/getPentagon', methods=['POST'])
 def get_image():
