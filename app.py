@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, send_file
 import json
 import numpy as np
 from pentagonPlotting import generateRadar
-from llm import checkContent, compareEmbeddings
+from llm import checkContent, compareEmbeddings, fastEmbedding
 from typing import Optional
 app= Flask(__name__)
 
@@ -105,7 +105,12 @@ def submitAnswer()-> dict[int, Optional[str], Optional[int]]:
             print(isLong, prompt)
             if not isLong:
                 return jsonify({"status": 1, "prompt": prompt})
-        #rank all other users ##TODO!! #yet to do- need examples
+            #generate embedding
+            embedding= fastEmbedding(response)
+            usersStruct[currUserId]["responses"][qnsId]={"response": response, "embedding": embedding}
+        else:
+            usersStruct[currUserId]["responses"][qnsId]=answer
+        print("Stored Anser", usersStruct[currUserId]["responses"][qnsId])
         userRankings= getRankings(qnsId, qnsType, answer, currUserId)
         print("userRankings",userRankings)
         # for idx, user in enumerate(userRankings):
@@ -166,7 +171,7 @@ def getRankings(qnsId, qnsType, answer, currUserId): #structure: array of userId
                 rankings[abs(usersStruct[userId]["responses"][str(qnsId)]-answer)].append(userId)
         return [rank for rank in rankings if rank]
     else: #free text answers
-        embeddingList=[np.array([usersStruct[user]["responses"]["3"]["embedding"]]) for user in usersStruct if user!=currUserId]
+        embeddingList=[np.array([usersStruct[user]["responses"]["3"]["embedding"]]) for user in usersStruct if user!=currUserId] 
         relativeRanking= compareEmbeddings(np.array([usersStruct[currUserId]["responses"]["3"]["embedding"]]), embeddingList)[0]
         return [[str(rank+1)] for rank in relativeRanking]
 
