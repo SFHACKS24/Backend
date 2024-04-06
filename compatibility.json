@@ -5,28 +5,32 @@
             "compatibilityScore": 5,
             "leadingPrompts": "What is your favourite colour?",
             "answerable": true,
-            "answer": "Blue"
+            "answer": "Blue",
+            "isBlacklisted": false
         },
         "2": {
             "qnsRanking": [],
             "compatibilityScore": 2,
             "leadingPrompts": "What is your favourite colour?",
             "answerable": false,
-            "answer": ""
+            "answer": "",
+            "isBlacklisted": false
         },
         "3": {
             "qnsRanking": [],
             "compatibilityScore": 3,
             "leadingPrompts": "What is your favourite colour?",
             "answerable": true,
-            "answer": "Red"
+            "answer": "Red",
+            "isBlacklisted": true
         },
         "4": {
             "qnsRanking": [],
             "compatibilityScore": 1,
             "leadingPrompts": "What is your favourite colour?",
             "answerable": false,
-            "answer": ""
+            "answer": "",
+            "isBlacklisted": true
         }
     },
     "1": {

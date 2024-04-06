@@ -78,11 +78,11 @@ def submitAnswer()-> dict[int, Optional[str], Optional[int]]:
     elif qnsId==1:
         usersStruct["LowWeightage"]=answer
         print("LowWeightage",usersStruct[currUserId]["LowWeightage"])
-    elif qnsId in nonNegotiableQns: #pop off blacklists
+    elif qnsId in nonNegotiableQns: #blacklisting
         for user in usersStruct:
             if user!=currUserId and  usersStruct[user]["responses"][str(qnsId)]!=answer:
-                compatibilitiesStruct[str(currUserId)].pop(str(user)) #TODO change to VETO?
-                print("removed user from compatiability",user)
+                compatibilitiesStruct[currUserId][user]["isBlacklisted"]=True
+                print("Blacklisted user",user)
         print("final compatiability",compatibilitiesStruct[currUserId])
         usersStruct[currUserId]["responses"][qnsId]=answer
     elif qnsId >= numQns-1: #leading prompts-> send one at a time or multiple? one time
@@ -135,7 +135,7 @@ def getDirectRecommendation()-> dict[int, Optional[str]]:
         userId= user[0]
         if user[1]["answerable"]==False:
             return jsonify(({"qnsType": 5, "userId": userId,"content": user[1]["leadingPrompts"]}))
-        if user[1]["compatiabilityScore"]>=compatibilityThreshold:
+        if user[1]["compatibilityScore"]>=compatibilityThreshold:
             filteredRecommendations.append(user)
     return jsonify({"qnsType": 6, "content": recommendations})
 
@@ -169,7 +169,8 @@ def getRecommendations(currUserId):
     top5= sorted(compatibilitiesStruct[currUserId].items(), key=lambda x: x[1]["compatibilityScore"], reverse=True)[:5]
     # top5_ids = [element[0] for element in top5]
     #return top 5 users
-    return top5 #TODO
+    whiteListedTop=[user for user in top5 if user[1]["isBlacklisted"]==False]
+    return whiteListedTop #TODO
 
 if __name__ == '__main__':  
    app.run()
