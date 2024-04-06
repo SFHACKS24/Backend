@@ -1,6 +1,7 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 import json
 import numpy as np
+from pentagonPlotting import generateRadar
 from llm import checkContent, compareEmbeddings
 from typing import Optional
 app= Flask(__name__)
@@ -55,7 +56,7 @@ def getQuestion()-> dict[int, Optional[str]]:
 
 #statuscodes: 0: success, 1: failure (answer too short), 2: found a higher threshold
 #response: {status: int, (optional) prompt: string, (optional) userId: int}
-#input: cookie, answer: str, qnsId: int, isLeadingPromptAns: str, (optional) userId: str
+#input: cookie, answer: str, qnsId: int, isLeadingPromptAns: str, (optional) userId: str. isLeadingPrompt:bool
 @app.route("/submitAnswer", methods=["POST"])
 def submitAnswer()-> dict[int, Optional[str], Optional[int]]:
     data= request.get_json()
@@ -64,6 +65,7 @@ def submitAnswer()-> dict[int, Optional[str], Optional[int]]:
     answer= data["answer"]
     qnsId= data["qnsId"]
     isLeadingPromptAns= data["isLeadingPromptAns"] #NEW
+    isLeadingPrompt= data["isLeadingPrompt"] #NEW
     maxCompatibilityScore=0
     maxCompatibilityUserId=None
     if isLeadingPromptAns: #TODO apply AI CHECK?
@@ -85,7 +87,7 @@ def submitAnswer()-> dict[int, Optional[str], Optional[int]]:
                 print("Blacklisted user",user)
         print("final compatiability",compatibilitiesStruct[currUserId])
         usersStruct[currUserId]["responses"][qnsId]=answer
-    elif qnsId >= numQns-1: #leading prompts-> send one at a time or multiple? one time
+    elif isLeadingPrompt: #leading prompts-> send one at a time or multiple? one time
         # leadingPrompts= usersStruct[currUserId]["leadingPrompt"]
         # leadingPrompts.append(answer)
         # while len(leadingPrompts)>3:
@@ -140,6 +142,16 @@ def getDirectRecommendation()-> dict[int, Optional[str]]:
         if user[1]["compatibilityScore"]>=compatibilityThreshold:
             filteredRecommendations.append(user)
     return jsonify({"qnsType": 6, "content": recommendations})
+
+@app.route('/getPentagon', methods=['POST'])
+def get_image():
+    data= request.get_json()
+    individualRanking= data["individualRanking"]
+    traits= ["Communication","Boundaries", "Financial Responsibilities","Compromise", "Ownership", "Cleanliness", "Similar Interests", "Reliability", "Adaptability", "Pets", "Quiet Hours", "Vice Usage"]
+    newTraits=traits[:len(individualRanking)]
+    data= [newTraits,individualRanking]
+    img_buffer = generateRadar(data)
+    return send_file(img_buffer, mimetype='image/png')
 
 def getRankings(qnsId, qnsType, answer, currUserId): #structure: array of userIds, idx corresponding to rank
     #if binary
