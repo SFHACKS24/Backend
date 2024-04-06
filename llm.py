@@ -1,5 +1,7 @@
+import json
 from dotenv import load_dotenv
 import os
+import numpy as np
 load_dotenv()
 OPENAI_API= os.getenv('OPENAI_API_KEY')
 
@@ -8,6 +10,7 @@ from langchain_openai import OpenAI,ChatOpenAI
 from langchain.output_parsers import ResponseSchema, StructuredOutputParser
 from openai import Client
 from fastembed.embedding import TextEmbedding as Embedding
+import faiss
 
 response_schemas = [
     ResponseSchema(name="isEnough", description="Boolean value indicating whether the answer provides enough content."),
@@ -41,10 +44,37 @@ def calculateEmbeddings(text):
     return response.data[0].embedding
 
 def fastEmbedding(text):
-    embedding_model = Embedding(model_name="BAAI/bge-base-en", max_length=512)
-    return list(embedding_model.embed(text))
+    embedding_model = Embedding(model_name="BAAI/bge-large-en-v1.5", max_length=512)
+    embedding= embedding_model.embed(text)
+    return list(embedding)[0].tolist()
+
+
+def compareEmbeddings(userEmbedding, embeddingList): #TODO yet to check
+    d = 1024  # dimensionality of your embedding data #1024
+    k = 4  # number of nearest neighbors to return
+    index = faiss.IndexFlatIP(d)
+    for em in embeddingList:
+        index.add(em)
+    D, I = index.search(userEmbedding, k)
+    print(D,I)
+    return I
+
 if __name__ == '__main__':  
-    print(fastEmbedding("I am a clean person."))
+    with open('newUsers.json', 'r') as file:
+        usersStruct = json.load(file)
+    currUserId="0"
+    embeddingList=[np.array([usersStruct[user]["responses"]["3"]["embedding"]]) for user in usersStruct if user!=currUserId]
+    compareEmbeddings(np.array([usersStruct[currUserId]["responses"]["3"]["embedding"]]), embeddingList)
+
+    # with open('users.json', 'r') as file:
+    #     usersStruct = json.load(file)
+    # for user in usersStruct:
+    #     response= usersStruct[user]["responses"]["3"]
+    #     embedding= fastEmbedding(response)
+    #     usersStruct[user]["responses"]["3"]={"response": response, "embedding": embedding}
+    # with open('newUsers.json', 'w') as json_file:
+    #     json.dump(usersStruct, json_file, indent=4)
+
     # print(prompt)
 
     # print(chain.invoke({"question": "To what extend do you think you are a clean person?", "answer": "I wash my hands after touching anything and wash all of my shoes everyday and do my dishes the moment they are dirtied everyday hence i think I am a clean person."}))

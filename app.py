@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import json
-from llm import checkContent
+import numpy as np
+from llm import checkContent, compareEmbeddings
 
 app= Flask(__name__)
 
@@ -18,7 +19,7 @@ cookieBank={"cookie":{"userId":"0","qnsId":10}}
 compatibilityThreshold=10
 
 #number is userId
-with open('users.json', 'r') as file:
+with open('newUsers.json', 'r') as file:
     usersStruct = json.load(file)
 
 with open('compatibility.json', 'r') as file:
@@ -121,10 +122,10 @@ def getRankings(qnsId, qnsType, answer, currUserId): #structure: array of userId
             if userId != currUserId:
                 rankings[abs(usersStruct[userId]["responses"][str(qnsId)]-answer)].append(userId)
         return [rank for rank in rankings if rank]
-    else: #TODO free text answers
-        print("work in progress")
-    #if text
-    return [0,1,2] #TODO rankings of all users
+    else: #free text answers
+        embeddingList=[np.array([usersStruct[user]["responses"]["3"]["embedding"]]) for user in usersStruct if user!=currUserId]
+        relativeRanking= compareEmbeddings(np.array([usersStruct[currUserId]["responses"]["3"]["embedding"]]), embeddingList)[0]
+        return [[str(rank+1)] for rank in relativeRanking]
 
 def calculateScore(currUserId,currScore, qnsId, rank):
     priority=1
