@@ -1,0 +1,57 @@
+[
+    {
+        "qns": "highweightage",
+        "type": 0
+    },
+    {
+        "qns": "lowweightage",
+        "type": 1
+    },
+    {
+        "qns": "first question about Communication",
+        "type": 0
+    },
+    {
+        "qns": "second question about Boundaries",
+        "type": 1
+    },
+    {
+        "qns": "third question about Financial Responsibility",
+        "type": 2
+    },{
+        "qns": "fourth question about Compromise",
+        "type": 2
+    },
+    {
+        "qns": "fifth question about Ownership",
+        "type": 2
+    },
+    {
+        "qns": "sixth question about Cleaniness",
+        "type": 2
+    },
+    {
+        "qns": "seventh question about Similar Interests",
+        "type": 2
+    },
+    {
+        "qns": "eighth question about Reliability",
+        "type": 2
+    },
+    {
+        "qns": "ninth question about Adaptability",
+        "type": 2
+    },
+    {
+        "qns": "tenth question about Pets",
+        "type": 2
+    },
+    {
+        "qns": "eleventh question about Quiet Hours",
+        "type": 2
+    },
+    {
+        "qns": "twelveth question about Vice Usage",
+        "type": 2
+    }
+]

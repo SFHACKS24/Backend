@@ -1,49 +1,31 @@
 from flask import Flask, request
+import json
 app= Flask(__name__)
 
+
+with open('profileQns.json', 'r') as file: #TODO yet to use
+    profileQnsBank = json.load(file)
+
+with open('qnsBank.json', 'r') as file:
+    qnsBank = json.load(file)
 #qnstypes: 0: binary, 1: scaled, 2: text, 3: weightage
-qnsBank=[{"qns":"highweightage","type":0}, {"qns":"lowweightage","type":1},{"qns":"firstQuestion","type":0},{"qns":"secondQuestion","type":1},{"qns":"thirdQuestion","type":2}]
+
+numQns= len(qnsBank)
+
 
 nonNegotiableQns=[2]
 
-numQns= len(qnsBank)
-cookieBank={"cookie":{"userId":0,"qnsId":0}}
+cookieBank={"cookie":{"userId":"0","qnsId":"0"}}
+
 compatibilityThreshold=10
 
 #number is userId
-usersStruct={
-    0:{
-    "responses":{
-        0:"answer",
-        1:"answer",
-        2:"answer",
-        },
-    "HighWeightage":[1,2],
-    "LowWeightage":[0],
-    "leadingPrompt":["prompt1","prompt2","prompt3"],
-    },
-    1:{
-    "responses":{
-        0:"answer",
-        1:"answer",
-        2:"answer",
-        },
-    "HighWeightage":[1,2],
-    "LowWeightage":[0],
-    "leadingPrompt":["prompt1","prompt2","prompt3"],
-    }
-}
+with open('users.json', 'r') as file:
+    usersStruct = json.load(file)
 
-compatibilitiesStruct={
-    0:{
-        1:{"qnsRanking":[0,1,2],"compatibilityScore":0.5},
-        2:{"qnsRanking":[0,1,2],"compatibilityScore":0.5},
-    },
-    1:{
-        0:{"qnsRanking":[0,1,2],"compatibilityScore":0.5},
-        2:{"qnsRanking":[0,1,2],"compatibilityScore":0.5},
-    }
-}
+with open('compatibility.json', 'r') as file:
+    compatibilitiesStruct = json.load(file)
+
 
 @app.route("/", methods=["GET"])
 def hello_world():
@@ -72,30 +54,31 @@ def submitAnswer():
     qnsId= data["qnsId"]
     maxCompatibilityScore=0
     maxCompatibilityUserId=None
-    if qnsId>= numQns: #TODO these are the leading prompts
-        return "No more questions"
+
     #if weightage qns
     if qnsId==0:
         usersStruct[currUserId]["HighWeightage"]=answer
-        print("HighWeightage",answer)
+        print("HighWeightage",usersStruct[currUserId]["HighWeightage"])
     elif qnsId==1:
         usersStruct["LowWeightage"]=answer
-        print("LowWeightage",answer)
+        print("LowWeightage",usersStruct[currUserId]["LowWeightage"])
     isLong, prompt= checkLength(qnsId,answer) #TODO for particular qns types?
     if not isLong:
         return ["1", prompt]
-    elif qnsId in nonNegotiableQns:
+    elif qnsId in nonNegotiableQns: #pop off blacklists
         for user in usersStruct:
-            if usersStruct[user]["responses"][qnsId]!=answer:
-                compatibilitiesStruct[currUserId].pop(user)
+            if user!=currUserId and  usersStruct[user]["responses"][str(qnsId)]!=answer:
+                compatibilitiesStruct[str(currUserId)].pop(str(user))
                 print("removed user from compatiability",user)
-        usersStruct[currUserId]["responses"].append({"qnsId":qnsId,"answer":answer})
-    elif qnsId >= numQns: #leading prompts
+        print("final compatiability",compatibilitiesStruct[currUserId])
+        usersStruct[currUserId]["responses"][qnsId]=answer
+    elif qnsId >= numQns: #leading prompts-> TODO send one at a time or multiple?
         leadingPrompts= usersStruct[currUserId]["leadingPrompt"]
         leadingPrompts.append(answer)
         while len(leadingPrompts)>3:
             leadingPrompts.pop(0)
         usersStruct[currUserId]["leadingPrompt"]=leadingPrompts
+        print(usersStruct[currUserId])
    
     else: # update score
         #rank all other users ##TODO!! #yet to do- need examples
@@ -109,7 +92,7 @@ def submitAnswer():
                 if compatibilityScore>compatibilityThreshold:
                     maxCompatibilityUserId=user
                 maxCompatibilityScore= max(maxCompatibilityScore,compatibilityScore)
-        usersStruct[currUserId]["responses"].append({"qnsId":qnsId,"answer":answer})
+        usersStruct[currUserId]["responses"][qnsId]=answer
     #store answer
 
     if maxCompatibilityScore>compatibilityThreshold:
@@ -137,4 +120,3 @@ def getRecommendations():
 
 if __name__ == '__main__':  
    app.run()
-
