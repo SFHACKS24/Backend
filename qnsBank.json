@@ -12,46 +12,46 @@
         "type": 0
     },
     {
-        "qns": "second question about Boundaries",
+        "qns": "second question about Boundaries (free text)",
         "type": 2
     },
     {
-        "qns": "third question about Financial Responsibility",
-        "type": 2
+        "qns": "third question about Financial Responsibility (binary)",
+        "type": 0
     },{
-        "qns": "fourth question about Compromise",
-        "type": 2
+        "qns": "fourth question about Compromise (scaled)",
+        "type": 1
     },
     {
         "qns": "fifth question about Ownership",
-        "type": 2
+        "type": 0
     },
     {
         "qns": "sixth question about Cleaniness",
-        "type": 2
+        "type": 0
     },
     {
         "qns": "seventh question about Similar Interests",
-        "type": 2
+        "type": 0
     },
     {
         "qns": "eighth question about Reliability",
-        "type": 2
+        "type": 0
     },
     {
         "qns": "ninth question about Adaptability",
-        "type": 2
+        "type": 0
     },
     {
         "qns": "tenth question about Pets",
-        "type": 2
+        "type": 0
     },
     {
         "qns": "eleventh question about Quiet Hours",
-        "type": 2
+        "type": 0
     },
     {
         "qns": "twelveth question about Vice Usage",
-        "type": 2
+        "type": 0
     }
 ]

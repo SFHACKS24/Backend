@@ -2,3 +2,5 @@ flask
 langchain
 langchain-openai
 python-dotenv
+openai
+fastembed

@@ -6,6 +6,8 @@ OPENAI_API= os.getenv('OPENAI_API_KEY')
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import OpenAI,ChatOpenAI
 from langchain.output_parsers import ResponseSchema, StructuredOutputParser
+from openai import Client
+from fastembed.embedding import TextEmbedding as Embedding
 
 response_schemas = [
     ResponseSchema(name="isEnough", description="Boolean value indicating whether the answer provides enough content."),
@@ -28,11 +30,22 @@ prompt = PromptTemplate(
 model = ChatOpenAI(temperature=0)
 chain = prompt | model | output_parser
 
-if __name__ == '__main__':  
-    print(prompt)
-
-    print(chain.invoke({"question": "To what extend do you think you are a clean person?", "answer": "I wash my hands after touching anything and wash all of my shoes everyday and do my dishes the moment they are dirtied everyday hence i think I am a clean person."}))
-    print(chain.invoke({"question": "To what extend do you think you are a clean person?", "answer": "I am a clean person."}))
 
 def checkContent(question, answer):
     return chain.invoke({"question": question, "answer": answer})
+
+
+def calculateEmbeddings(text):
+    client= Client()
+    response= client.embeddings.create(input= text, model= "text-embedding-3-small")
+    return response.data[0].embedding
+
+def fastEmbedding(text):
+    embedding_model = Embedding(model_name="BAAI/bge-base-en", max_length=512)
+    return list(embedding_model.embed(text))
+if __name__ == '__main__':  
+    print(fastEmbedding("I am a clean person."))
+    # print(prompt)
+
+    # print(chain.invoke({"question": "To what extend do you think you are a clean person?", "answer": "I wash my hands after touching anything and wash all of my shoes everyday and do my dishes the moment they are dirtied everyday hence i think I am a clean person."}))
+    # print(chain.invoke({"question": "To what extend do you think you are a clean person?", "answer": "I am a clean person."}))

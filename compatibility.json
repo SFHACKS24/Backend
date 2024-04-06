@@ -2,19 +2,31 @@
     "0": {
         "1": {
             "qnsRanking": [],
-            "compatibilityScore": 0
+            "compatibilityScore": 5,
+            "leadingPrompts": "What is your favourite colour?",
+            "answerable": true,
+            "answer": "Blue"
         },
         "2": {
             "qnsRanking": [],
-            "compatibilityScore": 0
+            "compatibilityScore": 2,
+            "leadingPrompts": "What is your favourite colour?",
+            "answerable": false,
+            "answer": ""
         },
         "3": {
             "qnsRanking": [],
-            "compatibilityScore": 0
+            "compatibilityScore": 3,
+            "leadingPrompts": "What is your favourite colour?",
+            "answerable": true,
+            "answer": "Red"
         },
         "4": {
             "qnsRanking": [],
-            "compatibilityScore": 0
+            "compatibilityScore": 1,
+            "leadingPrompts": "What is your favourite colour?",
+            "answerable": false,
+            "answer": ""
         }
     },
     "1": {
