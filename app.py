@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 import json
 import numpy as np
 from llm import checkContent, compareEmbeddings
-
+from typing import Optional
 app= Flask(__name__)
 
 with open('profileQns.json', 'r') as file: #TODO yet to use
@@ -10,12 +10,11 @@ with open('profileQns.json', 'r') as file: #TODO yet to use
 
 with open('qnsBank.json', 'r') as file:
     qnsBank = json.load(file)
-#qnstypes: 0: binary, 1: scaled, 2: text, 3: weightage, 4: leading prompt, 5: recommendations
 
 numQns= len(qnsBank)
 nonNegotiableQns=[2]
 freeTextQns=[3]
-cookieBank={"cookie":{"userId":"0","qnsId":10}}
+cookieBank={"cookie":{"userId":"0","qnsId":15}}
 compatibilityThreshold=10
 
 #number is userId
@@ -25,13 +24,16 @@ with open('newUsers.json', 'r') as file:
 with open('compatibility.json', 'r') as file:
     compatibilitiesStruct = json.load(file)
 
-
 @app.route("/", methods=["GET"])
 def hello_world():
-    return "<p>Hello, World!</p>"
+    return jsonify({"message": "Hello, World!"})
 
+#qnstypes: 0: binary, 1: scaled, 2: text, 3: weightage, 4: enter your leading prompt, 5: unanswered leading prompt, 6: recommendations 
+#response: {qnsTypes: int, (optional) content: string, (optional)userId: int} TODO if 6, gdluck
+#ONLY 6: [(userId,{qnsRanking: list[int], compatibilityScore: int, answerable: bool, answer: str})]
+#input: cookie
 @app.route("/getQuestion", methods=["POST"])
-def getQuestion():
+def getQuestion()-> dict[int, Optional[str]]: 
     data= request.get_json() #TODO change to cookies
     cookie= data["cookie"]
     currUserId= cookieBank[cookie]["userId"]
@@ -40,27 +42,37 @@ def getQuestion():
         qnsId= cookieBank[cookie]["qnsId"]
         cookieBank[cookie]["qnsId"]= (qnsId)+1
     if qnsId== numQns:
-        return ["shld be ignored", 4]
+        return jsonify({"qnsType": 4})
     elif qnsId> numQns:
         recommendations= getRecommendations(currUserId)
-        print(recommendations)
-        return [recommendations, 5] #
-    return qnsBank[qnsId]["qns"], qnsBank[qnsId]["type"]
-
+        for user in recommendations:
+            userId= user[0]
+            if user[1]["answerable"]==False:
+                return jsonify(({"qnsType": 5, "userId": userId,"content": user[1]["leadingPrompts"]}))
+        # print(recommendations)
+        return jsonify({"qnsType": 6, "content": recommendations}) #TODO 
+    return jsonify({"qnsType": qnsBank[qnsId]["type"], "content": qnsBank[qnsId]["qns"]})
 
 #statuscodes: 0: success, 1: failure (answer too short), 2: found a higher threshold
+#response: {status: int, (optional) prompt: string, (optional) userId: int}
+#input: cookie, answer: str, qnsId: int, isLeadingPromptAns: str, (optional) userId: str
 @app.route("/submitAnswer", methods=["POST"])
-def submitAnswer():
+def submitAnswer()-> dict[int, Optional[str], Optional[int]]:
     data= request.get_json()
     cookie= data["cookie"]
     currUserId= cookieBank[cookie]["userId"]
     answer= data["answer"]
     qnsId= data["qnsId"]
+    isLeadingPromptAns= data["isLeadingPromptAns"] #NEW
     maxCompatibilityScore=0
     maxCompatibilityUserId=None
-
+    if isLeadingPromptAns: #TODO apply AI CHECK?
+        userId= data["userId"]
+        compatibilitiesStruct[currUserId][userId]["answerable"]=True
+        compatibilitiesStruct[currUserId][userId]["answer"]=answer
+        print("leading prompt answer",compatibilitiesStruct[currUserId][userId]["answer"])
     #if weightage qns
-    if qnsId==0:
+    elif qnsId==0:
         usersStruct[currUserId]["HighWeightage"]=answer
         print("HighWeightage",usersStruct[currUserId]["HighWeightage"])
     elif qnsId==1:
@@ -90,7 +102,7 @@ def submitAnswer():
             prompt= response["FollowUpPrompt"]
             print(isLong, prompt)
             if not isLong:
-                return ["1", prompt]
+                return jsonify({"status": 1, "prompt": prompt})
         #rank all other users ##TODO!! #yet to do- need examples
         userRankings= getRankings(qnsId, qnsType, answer, currUserId)
         print("userRankings",userRankings)
@@ -107,8 +119,8 @@ def submitAnswer():
     #store answer
 
     if maxCompatibilityScore>compatibilityThreshold:
-        return 2, maxCompatibilityUserId
-    return ["0","shld be ignored"]
+        return jsonify({"status": 2, "userId": maxCompatibilityUserId})
+    return jsonify({"status": 0})
 
 def getRankings(qnsId, qnsType, answer, currUserId): #structure: array of userIds, idx corresponding to rank
     #if binary
