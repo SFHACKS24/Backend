@@ -50,7 +50,7 @@ def getQuestion()-> dict[int, Optional[str]]:
             if user[1]["answerable"]==False:
                 return jsonify(({"qnsType": 5, "userId": userId,"content": user[1]["leadingPrompts"]}))
         # print(recommendations)
-        return jsonify({"qnsType": 6, "content": recommendations}) #TODO 
+        return jsonify({"qnsType": 6, "content": recommendations})
     return jsonify({"qnsType": qnsBank[qnsId]["type"], "content": qnsBank[qnsId]["qns"]})
 
 #statuscodes: 0: success, 1: failure (answer too short), 2: found a higher threshold
@@ -121,6 +121,23 @@ def submitAnswer()-> dict[int, Optional[str], Optional[int]]:
     if maxCompatibilityScore>compatibilityThreshold:
         return jsonify({"status": 2, "userId": maxCompatibilityUserId})
     return jsonify({"status": 0})
+
+#refer to getQuestion for return types
+#to be called when match of higher compatibility is found
+@app.route("/getDirectRecommendation", methods=["POST"])
+def getDirectRecommendation()-> dict[int, Optional[str]]:
+    data= request.get_json()
+    cookie= data["cookie"]
+    currUserId= cookieBank[cookie]["userId"]
+    recommendations= getRecommendations(currUserId)
+    filteredRecommendations=[]
+    for user in recommendations:
+        userId= user[0]
+        if user[1]["answerable"]==False:
+            return jsonify(({"qnsType": 5, "userId": userId,"content": user[1]["leadingPrompts"]}))
+        if user[1]["compatiabilityScore"]>=compatibilityThreshold:
+            filteredRecommendations.append(user)
+    return jsonify({"qnsType": 6, "content": recommendations})
 
 def getRankings(qnsId, qnsType, answer, currUserId): #structure: array of userIds, idx corresponding to rank
     #if binary
