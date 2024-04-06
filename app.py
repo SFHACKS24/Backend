@@ -29,6 +29,20 @@ with open('compatibility.json', 'r') as file:
 def hello_world():
     return jsonify({"message": "Hello, World!"})
 
+#take note of the key names
+@app.route("/saveProfileInfo", method=["POST"])
+def saveProfileInfo():
+    data= request.get_json()
+    cookie= data["cookie"]
+    currUserId= cookieBank[cookie]["userId"]
+    usersStruct[currUserId]["profile"]["name"]= data["name"]
+    usersStruct[currUserId]["profile"]["age"]= data["age"]
+    usersStruct[currUserId]["profile"]["gender"]= data["gender"]
+    usersStruct[currUserId]["profile"]["occupation"]= data["occupation"]
+    usersStruct[currUserId]["profile"]["location"]= data["location"]
+    usersStruct[currUserId]["profile"]["budget"]= data["budget"]
+    usersStruct[currUserId]["profile"]["room"]= data["room"]
+
 #input:list of userIds
 #output: list of dict[**userprofile, compatibilityScore, qnsRanking, answer]
 @app.route("/getUsersInformation",method=["POST"])
@@ -48,7 +62,7 @@ def getUersInformation():
 
 #qnstypes: 0: binary, 1: scaled, 2: text, 3: weightage, 4: enter your leading prompt, 5: unanswered leading prompt, 6: recommendations 
 #response: {qnsTypes: int, (optional) content: string, (optional)userId: int} TODO if 6, gdluck
-#ONLY 6: [(userId,{qnsRanking: list[int], compatibilityScore: int, answerable: bool, answer: str})]
+#ONLY 6: list [userIds: int]
 #input: cookie
 @app.route("/getQuestion", methods=["POST"])
 def getQuestion()-> dict[int, Optional[str]]: 
