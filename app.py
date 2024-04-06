@@ -2,30 +2,47 @@ from flask import Flask, request
 app= Flask(__name__)
 
 #qnstypes: 0: binary, 1: scaled, 2: text, 3: weightage
-qnsBank=[{"qns":"highweightage","type":0}, {"qns":"highweightage","type":1},{"qns":"firstQuestion","type":0},{"qns":"secondQuestion","type":1},{"qns":"thirdQuestion","type":2}]
+qnsBank=[{"qns":"highweightage","type":0}, {"qns":"lowweightage","type":1},{"qns":"firstQuestion","type":0},{"qns":"secondQuestion","type":1},{"qns":"thirdQuestion","type":2}]
+
+nonNegotiableQns=[2]
+
 numQns= len(qnsBank)
-cookieBank={"cookie":0}
+cookieBank={"cookie":{"userId":0,"qnsId":0}}
 compatibilityThreshold=10
 
-userStruct={
-    "userId": 0,
-    "responses":[{
-        "qnsId": 0,
-        "answer": "answer"
-    },{
-        "qnsId": 1,
-        "answer": "answer"
-    },{
-        "qnsId": 2,
-        "answer": "answer"
-    }],
+#number is userId
+usersStruct={
+    0:{
+    "responses":{
+        0:"answer",
+        1:"answer",
+        2:"answer",
+        },
     "HighWeightage":[1,2],
     "LowWeightage":[0],
     "leadingPrompt":["prompt1","prompt2","prompt3"],
+    },
+    1:{
+    "responses":{
+        0:"answer",
+        1:"answer",
+        2:"answer",
+        },
+    "HighWeightage":[1,2],
+    "LowWeightage":[0],
+    "leadingPrompt":["prompt1","prompt2","prompt3"],
+    }
 }
-compatibilityStruct={
-    {"userId":0,"qnsRanking":[0,1,2],"compatibilityScore":0.5},
-    {"userId":1,"qnsRanking":[0,1,2],"compatibilityScore":1},
+
+compatibilitiesStruct={
+    0:{
+        1:{"qnsRanking":[0,1,2],"compatibilityScore":0.5},
+        2:{"qnsRanking":[0,1,2],"compatibilityScore":0.5},
+    },
+    1:{
+        0:{"qnsRanking":[0,1,2],"compatibilityScore":0.5},
+        2:{"qnsRanking":[0,1,2],"compatibilityScore":0.5},
+    }
 }
 
 @app.route("/", methods=["GET"])
@@ -38,69 +55,80 @@ def getQuestion():
     cookie= data["cookie"]
     qnsId=0
     if cookie in cookieBank:
-        qnsId= cookieBank[cookie]
-        cookieBank[cookie]= qnsId+1
+        qnsId= cookieBank[cookie]["qnsId"]
+        cookieBank[cookie]["qnsId"]= qnsId+1
     if qnsId>= numQns:
         return "No more questions" #process for leading prompts
     return qnsBank[qnsId]["qns"], qnsBank[qnsId]["type"]
 
 
 #statuscodes: 0: success, 1: failure (answer too short), 2: found a higher threshold
-@app.route("submitAnswer", methods=["POST"])
+@app.route("/submitAnswer", methods=["POST"])
 def submitAnswer():
     data= request.get_json()
+    cookie= data["cookie"]
+    currUserId= cookieBank[cookie]["userId"]
     answer= data["answer"]
     qnsId= data["qnsId"]
     maxCompatibilityScore=0
     maxCompatibilityUserId=None
-    if qnsId>= numQns: #these are the leading prompts
+    if qnsId>= numQns: #TODO these are the leading prompts
         return "No more questions"
-    isLong, prompt= checkLength(qnsId,answer)
-    if not isLong:
-        return 1, prompt
     #if weightage qns
     if qnsId==0:
-        userStruct["HighWeightage"]=answer
+        usersStruct[currUserId]["HighWeightage"]=answer
+        print("HighWeightage",answer)
     elif qnsId==1:
-        userStruct["LowWeightage"]=answer
+        usersStruct["LowWeightage"]=answer
+        print("LowWeightage",answer)
+    isLong, prompt= checkLength(qnsId,answer) #TODO for particular qns types?
+    if not isLong:
+        return ["1", prompt]
+    elif qnsId in nonNegotiableQns:
+        for user in usersStruct:
+            if usersStruct[user]["responses"][qnsId]!=answer:
+                compatibilitiesStruct[currUserId].pop(user)
+                print("removed user from compatiability",user)
+        usersStruct[currUserId]["responses"].append({"qnsId":qnsId,"answer":answer})
     elif qnsId >= numQns: #leading prompts
-        leadingPrompts= userStruct["leadingPrompt"]
+        leadingPrompts= usersStruct[currUserId]["leadingPrompt"]
         leadingPrompts.append(answer)
         while len(leadingPrompts)>3:
             leadingPrompts.pop(0)
-        userStruct["leadingPrompt"]=leadingPrompts
+        usersStruct[currUserId]["leadingPrompt"]=leadingPrompts
    
     else: # update score
-        #rank all other users ##TODO!!
+        #rank all other users ##TODO!! #yet to do- need examples
         userRankings= getRankings(qnsId, answer)
         for idx, user in enumerate(userRankings):
             rank=idx+1
-            compatibilityStruct[user]["qnsRanking"].append(rank)
-            compatibilityScore= calculateScore(compatibilityStruct[user]["compatibilityScore"],qnsId,rank)
-            compatibilityStruct[user]["compatibilityScore"]=compatibilityScore
-            if compatibilityScore>compatibilityThreshold:
-                maxCompatibilityUserId=user
-            maxCompatibilityScore= max(maxCompatibilityScore,compatibilityScore)
-        userStruct["responses"].append({"qnsId":qnsId,"answer":answer})
+            if user in compatibilitiesStruct[currUserId]:
+                compatibilitiesStruct[currUserId][user]["qnsRanking"].append(rank)
+                compatibilityScore= calculateScore(currUserId, compatibilitiesStruct[currUserId][user]["compatibilityScore"],qnsId,rank)
+                compatibilitiesStruct[currUserId][user]["compatibilityScore"]=compatibilityScore
+                if compatibilityScore>compatibilityThreshold:
+                    maxCompatibilityUserId=user
+                maxCompatibilityScore= max(maxCompatibilityScore,compatibilityScore)
+        usersStruct[currUserId]["responses"].append({"qnsId":qnsId,"answer":answer})
     #store answer
 
     if maxCompatibilityScore>compatibilityThreshold:
         return 2, maxCompatibilityUserId
-    return 0, None
+    return ["0","shld be ignored"]
 
 def checkLength(qnsId, answer):
-    if len(answer)<10:
+    if len(answer)<2:
         return False, "Answer too short" #TODO generated by AI
     return True, None
 
 def getRankings(qnsId, answer):
     return [0,1,2] #TODO rankings of all users
 
-def calculateScore(currScore, qnsId, rank):
+def calculateScore(currUserId,currScore, qnsId, rank):
     priority=1
-    if qnsId in userStruct["HighWeightage"]:
+    if qnsId in usersStruct[currUserId]["HighWeightage"]:
         priority=2
-    elif qnsId in userStruct["LowWeightage"]:
+    elif qnsId in usersStruct[currUserId]["LowWeightage"]:
         priority=0.5
     return currScore+ 1/(rank)*priority #TODO: adjust formula
 
