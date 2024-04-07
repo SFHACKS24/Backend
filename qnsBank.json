@@ -47,8 +47,8 @@
         "type": 1
     },
     {
-        "qns": "Welcome to Chillville, where peaceful evenings reign supreme. As the sun sets, the apartment transforms into a sanctuary of serenity.\n What are your expectations for quiet hours on weekdays and weekends?",
-        "type": 1
+        "qns": "What are your ideal quiet hours in a shared living space? Please describe how you envision these hours contributing to your daily routine and well-being",
+        "type": 2
     },
     {
         "qns": "How important is it for you to live in a home environment that maintains a certain lifestyle standard, specifically regarding the use or non-use of substances like alcohol, tobacco, and other recreational drugs? (Very Important [True] / Not Important [False])",
