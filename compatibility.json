@@ -12,7 +12,7 @@
             "qnsRanking": [],
             "compatibilityScore": 0,
             "leadingPrompts": "What's your favorite way to unwind after a long day?",
-            "answerable": false,
+            "answerable": true,
             "answer": "Difficult roads often lead to beautiful destinations",
             "isBlacklisted": false
         },
