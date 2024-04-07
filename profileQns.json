@@ -1,23 +1,23 @@
 [
-    {
-        "qns": "Name"
-    },
-    {
-        "qns": "Gender"
-    },
-    {
-        "qns": "Age"
-    },
-    {
-        "qns": "Occupation/School"
-    },
-    {
-        "qns": "Location"
-    },{
-        "qns": "Budget"
-    },
-    {
-        "qns": "Do you have a room?"
-    }
-
+  {
+    "qns": "Name"
+  },
+  {
+    "qns": "Gender"
+  },
+  {
+    "qns": "Age"
+  },
+  {
+    "qns": "Occupation/School"
+  },
+  {
+    "qns": "Location"
+  },
+  {
+    "qns": "Budget"
+  },
+  {
+    "qns": "Do you have a room?"
+  }
 ]

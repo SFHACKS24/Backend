@@ -18,7 +18,7 @@ with open('qnsBank.json', 'r') as file:
 numQns = len(qnsBank)
 nonNegotiableQns = [2]
 freeTextQns = [3]
-cookieBank = {"cookie": {"userId": "0", "qnsId": 15}}
+cookieBank = {}
 compatibilityThreshold = 10
 
 # number is userId
@@ -37,11 +37,27 @@ def hello_world():
 # take note of the key names
 
 
+def handle_cookie(cookie):
+    userId = "0"
+    if cookie not in cookieBank:
+        cookieBank[cookie] = {"userId": userId, "qnsId": 0}
+        # usersStruct[len(usersStruct)] = {
+        #     "profile": {}, "responses": {}, "leadingPrompt": "", "HighWeightage": [], "LowWeightage": []}
+        # compatibilitiesStruct[len(usersStruct)] = {}
+        # for user in usersStruct:
+        #     if user != len(usersStruct):
+        #         compatibilitiesStruct[len(usersStruct)][user] = {
+        #             "compatibilityScore": 0, "qnsRanking": [], "answer": "", "isBlacklisted": False, "answerable": False}
+        #         compatibilitiesStruct[user][len(usersStruct)] = {
+        #             "compatibilityScore": 0, "qnsRanking": [], "answer": "", "isBlacklisted": False, "answerable": False}
+
+
 @app.route("/saveProfileInfo", methods=["POST"])
 @cross_origin()
 def saveProfileInfo():
     data = request.get_json()
     cookie = data["cookie"]
+    handle_cookie(cookie)
     currUserId = cookieBank[cookie]["userId"]
     usersStruct[currUserId]["profile"]["name"] = data["name"]
     usersStruct[currUserId]["profile"]["age"] = data["age"]
@@ -60,6 +76,7 @@ def saveProfileInfo():
 def getUersInformation():
     data = request.get_json()
     cookie = data["cookie"]
+    handle_cookie(cookie)
     currUserId = cookieBank[cookie]["userId"]
     userIds = data["userIds"]
     userInformation = []
@@ -82,22 +99,22 @@ def getUersInformation():
 def getQuestion() -> dict[int, Optional[str]]:
     data = request.get_json()  # TODO change to cookies
     cookie = data["cookie"]
+    handle_cookie(cookie)
     currUserId = cookieBank[cookie]["userId"]
     qnsId = "0"
     if cookie in cookieBank:
         qnsId = cookieBank[cookie]["qnsId"]
-        cookieBank[cookie]["qnsId"] = (qnsId)+1
     if qnsId == numQns:
-        return jsonify({"qnsType": 4})
+        return jsonify({"qnsType": 4, "qnsId": qnsId})
     elif qnsId > numQns:
         recommendations = getRecommendations(currUserId)
         for user in recommendations:
             userId = user[0]
             if user[1]["answerable"] == False:
-                return jsonify(({"qnsType": 5, "userId": userId, "content": user[1]["leadingPrompts"]}))
+                return jsonify(({"qnsType": 5, "userId": userId, "content": user[1]["leadingPrompts"], "qnsId": qnsId}))
         onlyRanking = [user[0] for user in recommendations]
         return jsonify({"qnsType": 6, "content": onlyRanking})
-    return jsonify({"qnsType": qnsBank[qnsId]["type"], "content": qnsBank[qnsId]["qns"]})
+    return jsonify({"qnsType": qnsBank[qnsId]["type"], "content": qnsBank[qnsId]["qns"], "qnsId": qnsId})
 
 # statuscodes: 0: success, 1: failure (answer too short), 2: found a higher threshold
 # response: {status: int, (optional) prompt: string, (optional) userId: int}
@@ -109,6 +126,7 @@ def getQuestion() -> dict[int, Optional[str]]:
 def submitAnswer() -> dict[int, Optional[str], Optional[int]]:
     data = request.get_json()
     cookie = data["cookie"]
+    handle_cookie(cookie)
     currUserId = cookieBank[cookie]["userId"]
     answer = data["answer"]
     qnsId = data["qnsId"]
@@ -116,6 +134,7 @@ def submitAnswer() -> dict[int, Optional[str], Optional[int]]:
     isLeadingPrompt = data["isLeadingPrompt"]  # NEW
     maxCompatibilityScore = 0
     maxCompatibilityUserId = None
+    cookieBank[cookie]["qnsId"] = (qnsId)+1
     if isLeadingPromptAns:  # TODO apply AI CHECK?
         userId = data["userId"]
         compatibilitiesStruct[currUserId][userId]["answerable"] = True
@@ -188,6 +207,7 @@ def submitAnswer() -> dict[int, Optional[str], Optional[int]]:
 def getDirectRecommendation() -> dict[int, Optional[str]]:
     data = request.get_json()
     cookie = data["cookie"]
+    handle_cookie(cookie)
     currUserId = cookieBank[cookie]["userId"]
     if usersStruct[currUserId]["leadingPrompt"].length == 0:
         return jsonify({"qnsType": 4})
@@ -227,6 +247,7 @@ def getRankings(qnsId, qnsType, answer, currUserId):
         rankings = [[]for _ in range(10)]  # RANGE IS 0-10
         for userId in usersStruct:
             if userId != currUserId:
+                print(answer)
                 rankings[abs(usersStruct[userId]["responses"]
                              [str(qnsId)]-answer)].append(userId)
         return [rank for rank in rankings if rank]

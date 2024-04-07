@@ -1,57 +1,58 @@
 [
-    {
-        "qns": "Given the following traits, what do you value most in a roommate? List wisely.",
-        "type": 3
-    },
-    {
-        "qns": "Given the following traits, what do you think is not that important in a roommate? List wisely.",
-        "type": 3
-    },
-    {
-        "qns": "On a scale from 1 to 10, how would you rate your preference for daily communication with your roommate? A score of 1 indicates a preference for minimal direct communication (e.g., only discussing essential matters or emergencies), while a score of 10 indicates a desire for frequent, open conversations about both day-to-day activities and deeper topics.",
-        "type": 1
-    },
-    {
-        "qns": "On a scale from 1 to 10, how important is it for you to have clearly defined personal spaces and boundaries within your living situation? A score of 1 suggests you are very flexible about sharing your space and belongings, and do not feel a strong need for personal boundaries. A score of 10 indicates a strong preference for clear personal boundaries, including exclusive use of your belongings and private spaces.",
-        "type": 1
-    },
-    {
-        "qns": "How important is it for you to manage financial obligations, such as rent and utilities, in a timely manner? (Very Important [True] / Not a Priority [False]).",
-        "type": 0
-    },{
-        "qns": "How much do you value the ability to adapt and make compromises in your living situation to ensure a harmonious environment for all residents? (Very Important [True] / Not Important [False])",
-        "type": 0
-    },
-    {
-        "qns": "Imagine you're the captain of a ship that's hit a small iceberg, causing a minor leak. Everyone on board looks to you; what's your plan to address the situation and keep the crew calm and collected?",
-        "type": 2
-    },
-    {
-        "qns": "Imagine coming home after a long day to find the living room and kitchen in a bit of disarray, with dishes in the sink, some clutter on the table, and the floor needing a sweep. What's your immediate reaction and how would you address this situation, especially if it became a recurring scenario with your roommate?",
-        "type": 2
-    },
-    {
-        "qns": " If you could organize the perfect day out with your future roommate, filled with activities that reflect your shared interests, what would it look like from dawn till dusk?",
-        "type": 2
-    },
-    {
-        "qns": "When it comes to household responsibilities and commitments, how much do you prioritize ensuring they are handled promptly and without needing to be reminded? (High Priority [True] / Low Priority [False])",
-        "type": 0
-    },
-    {
-        "qns": "Rate your adaptability to changes in your living environment on a scale from 1 to 10. A score of 1 means changes in your living situation or routines significantly unsettle you, and you prefer everything to remain constant. A score of 10 suggests you easily adapt to changes and are comfortable with varying routines, unexpected guests, or shifts in household dynamics.",
-        "type": 1
-    },
-    {
-        "qns": "On a scale from 1 to 10, how open are you to living with pets? A score of 1 indicates a strong preference against having pets in your living space, possibly due to allergies, fear, or dislike of animals. A score of 10 indicates not only a willingness but also enthusiasm about living with pets, regardless of type or size.",
-        "type": 1
-    },
-    {
-        "qns": "What are your ideal quiet hours in a shared living space? Please describe how you envision these hours contributing to your daily routine and well-being",
-        "type": 2
-    },
-    {
-        "qns": "How important is it for you to live in a home environment that maintains a certain lifestyle standard, specifically regarding the use or non-use of substances like alcohol, tobacco, and other recreational drugs? (Very Important [True] / Not Important [False])",
-        "type": 0
-    }
+  {
+    "qns": "Given the following traits, what do you value most in a roommate? List wisely.",
+    "type": 3
+  },
+  {
+    "qns": "Given the following traits, what do you think is not that important in a roommate? List wisely.",
+    "type": 3
+  },
+  {
+    "qns": "On a scale from 1 to 10, how would you rate your preference for daily communication with your roommate? A score of 1 indicates a preference for minimal direct communication (e.g., only discussing essential matters or emergencies), while a score of 10 indicates a desire for frequent, open conversations about both day-to-day activities and deeper topics.",
+    "type": 1
+  },
+  {
+    "qns": "On a scale from 1 to 10, how important is it for you to have clearly defined personal spaces and boundaries within your living situation? A score of 1 suggests you are very flexible about sharing your space and belongings, and do not feel a strong need for personal boundaries. A score of 10 indicates a strong preference for clear personal boundaries, including exclusive use of your belongings and private spaces.",
+    "type": 1
+  },
+  {
+    "qns": "How important is it for you to manage financial obligations, such as rent and utilities, in a timely manner? (Very Important [True] / Not a Priority [False]).",
+    "type": 0
+  },
+  {
+    "qns": "How much do you value the ability to adapt and make compromises in your living situation to ensure a harmonious environment for all residents? (Very Important [True] / Not Important [False])",
+    "type": 0
+  },
+  {
+    "qns": "Imagine you're the captain of a ship that's hit a small iceberg, causing a minor leak. Everyone on board looks to you; what's your plan to address the situation and keep the crew calm and collected?",
+    "type": 2
+  },
+  {
+    "qns": "Imagine coming home after a long day to find the living room and kitchen in a bit of disarray, with dishes in the sink, some clutter on the table, and the floor needing a sweep. What's your immediate reaction and how would you address this situation, especially if it became a recurring scenario with your roommate?",
+    "type": 2
+  },
+  {
+    "qns": " If you could organize the perfect day out with your future roommate, filled with activities that reflect your shared interests, what would it look like from dawn till dusk?",
+    "type": 2
+  },
+  {
+    "qns": "When it comes to household responsibilities and commitments, how much do you prioritize ensuring they are handled promptly and without needing to be reminded? (High Priority [True] / Low Priority [False])",
+    "type": 0
+  },
+  {
+    "qns": "Rate your adaptability to changes in your living environment on a scale from 1 to 10. A score of 1 means changes in your living situation or routines significantly unsettle you, and you prefer everything to remain constant. A score of 10 suggests you easily adapt to changes and are comfortable with varying routines, unexpected guests, or shifts in household dynamics.",
+    "type": 1
+  },
+  {
+    "qns": "On a scale from 1 to 10, how open are you to living with pets? A score of 1 indicates a strong preference against having pets in your living space, possibly due to allergies, fear, or dislike of animals. A score of 10 indicates not only a willingness but also enthusiasm about living with pets, regardless of type or size.",
+    "type": 1
+  },
+  {
+    "qns": "What are your ideal quiet hours in a shared living space? Please describe how you envision these hours contributing to your daily routine and well-being",
+    "type": 2
+  },
+  {
+    "qns": "How important is it for you to live in a home environment that maintains a certain lifestyle standard, specifically regarding the use or non-use of substances like alcohol, tobacco, and other recreational drugs? (Very Important [True] / Not Important [False])",
+    "type": 0
+  }
 ]
