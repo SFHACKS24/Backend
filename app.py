@@ -90,8 +90,6 @@ def getUersInformation():
 # response: {qnsTypes: int, (optional) content: string, (optional)userId: int} TODO if 6, gdluck
 # ONLY 6: list [userIds: int]
 # input: cookie
-
-
 @app.route("/getQuestion", methods=["POST"])
 @cross_origin()
 def getQuestion() -> dict[int, Optional[str]]:
@@ -184,16 +182,18 @@ def submitAnswer() -> dict[int, Optional[str], Optional[int]]:
         # print('question type', qnsType, qnsId)
         userRankings = getRankings(qnsId, int(qnsType), answer, currUserId)
         print("userRankings", userRankings)
-        # for idx, user in enumerate(userRankings):
-        #     rank=idx+1
-        #     if user in compatibilitiesStruct[currUserId]:
-        #         compatibilitiesStruct[currUserId][user]["qnsRanking"].append(rank)
-        #         compatibilityScore= calculateScore(currUserId, compatibilitiesStruct[currUserId][user]["compatibilityScore"],qnsId,rank)
-        #         compatibilitiesStruct[currUserId][user]["compatibilityScore"]=compatibilityScore
-        #         if compatibilityScore>compatibilityThreshold:
-        #             maxCompatibilityUserId=user
-        #         maxCompatibilityScore= max(maxCompatibilityScore,compatibilityScore)
-        # usersStruct[currUserId]["responses"][qnsId]=answer
+        for idx, userList in enumerate(userRankings):
+            rank=idx+1
+            for user in userList:
+                if compatibilitiesStruct[currUserId][user]["isBlacklisted"] == False:
+                    compatibilitiesStruct[currUserId][user]["qnsRanking"].append(rank)
+                    compatibilityScore= calculateScore(currUserId, compatibilitiesStruct[currUserId][user]["compatibilityScore"],qnsId,rank)
+                    compatibilitiesStruct[currUserId][user]["compatibilityScore"]=compatibilityScore
+                    print("compatibilityScore for user", user, compatibilityScore)
+                    if compatibilityScore>compatibilityThreshold:
+                        maxCompatibilityUserId=user
+                    maxCompatibilityScore= max(maxCompatibilityScore,compatibilityScore)
+        usersStruct[currUserId]["responses"][qnsId]=answer
     # store answer
 
     if maxCompatibilityScore > compatibilityThreshold:
@@ -261,7 +261,7 @@ def getRankings(qnsId, qnsType, answer, currUserId):
 
 def calculateScore(currUserId, currScore, qnsId, rank):
     priority = 1
-    if qnsId in usersStruct[currUserId]["responses"]["0"]["content"]:
+    if qnsId in usersStruct[str(currUserId)]["responses"]["0"]["content"]:
         priority = 2
     elif qnsId in usersStruct[currUserId]["responses"]["1"]["content"]:
         priority = 0.5
