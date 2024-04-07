@@ -6,7 +6,7 @@
             "age": "user0 age",
             "Occupation/School": "user0 Occupation/School",
             "Location": "user0 Location",
-            "Budget": "user0 Budget",
+            "Budget": 1000,
             "Do you have a room?": true
         },
         "responses": {
@@ -79,7 +79,7 @@
             "age": 24,
             "Occupation/School": "SUTD",
             "Location": "Berkeley,CA",
-            "Budget": "1000",
+            "Budget": 1000,
             "Do you have a room?": true
         },
         "responses": {
