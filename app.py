@@ -92,16 +92,19 @@ def get_profile():
     data = request.get_json()
     cookie = str(data["cookie"])
     handle_cookie(cookie)
-    curr_user_id = cookieBank[cookie]["userId"]
+    currUserId = cookieBank[cookie]["userId"]
     user_ids = data["userIds"]
-    user_infos = []
+    userInformation = []
     for id in user_ids:
         user = usersStruct[id]
-        user["compatibilityScore"] = compatibilitiesStruct[curr_user_id][id]["compatibilityScore"]
-        user["qnsRanking"] = compatibilitiesStruct[curr_user_id][id]["qnsRanking"]
-        user["answer"] = compatibilitiesStruct[curr_user_id][id]["answer"]
-        user_infos.append(user)
-    return jsonify(user_infos)
+        user["compatibilityScore"] = int(
+            compatibilitiesStruct[currUserId][id]["compatibilityScore"])
+        user["qnsRanking"] = compatibilitiesStruct[currUserId][id]["qnsRanking"]
+        while len(user["qnsRanking"]) < numQns:
+            user["qnsRanking"].append(3)
+        user["answer"] = str(compatibilitiesStruct[currUserId][id]["answer"])
+        userInformation.append(user)
+    return jsonify(userInformation)
 
 # qnstypes: 0: binary, 1: scaled, 2: text, 3: weightage, 4: enter your leading prompt, 5: unanswered leading prompt, 6: recommendations
 # response: {qnsTypes: int, (optional) content: string, (optional)userId: int} TODO if 6, gdluck
