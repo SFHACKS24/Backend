@@ -108,7 +108,7 @@ def getQuestion() -> dict[int, Optional[str]]:
             userId = user[0]
             if user[1]["answerable"] == False:
                 return jsonify(({"qnsType": 5, "userId": userId, "content": user[1]["leadingPrompts"], "qnsId": qnsId}))
-        onlyRanking = [str(user[0]) for user in recommendations]
+        onlyRanking = [int(user[0]) for user in recommendations]
         return jsonify({"qnsType": 6, "content": onlyRanking})
     return jsonify({"qnsType": qnsBank[qnsId]["type"], "content": qnsBank[qnsId]["qns"], "qnsId": qnsId})
 
@@ -221,7 +221,7 @@ def getDirectRecommendation() -> dict[int, Optional[str]]:
             return jsonify(({"qnsType": 5, "userId": userId, "content": user[1]["leadingPrompts"]}))
         if user[1]["compatibilityScore"] >= compatibilityThreshold:
             filteredRecommendations.append(user)
-    onlyRanking = [str(user[0]) for user in recommendations]
+    onlyRanking = [int(user[0]) for user in recommendations]
     return jsonify({"qnsType": 6, "content": onlyRanking})
 
 
