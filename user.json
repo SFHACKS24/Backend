@@ -11,11 +11,17 @@
         },
         "responses": {
             "0": {
-                "content": "",
+                "content": [
+                    1,
+                    2
+                ],
                 "embedding": ""
             },
             "1": {
-                "content": "",
+                "content": [
+                    3,
+                    4
+                ],
                 "embedding": ""
             },
             "2": {
