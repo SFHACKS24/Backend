@@ -10,9 +10,11 @@ from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI, OpenAI
 from openai import Client
 
+
 load_dotenv()
 OPENAI_API = os.getenv('OPENAI_API_KEY')
-
+with open('qnsBank.json', 'r') as file:
+    qnsBank = json.load(file)
 
 response_schemas = [
     ResponseSchema(
@@ -64,7 +66,58 @@ def compareEmbeddings(userEmbedding, embeddingList):  # TODO yet to check
     D, I = index.search(userEmbedding, k)
     print(D, I)
     return I
+def getSummary(userId):
+    with open('user.json', 'r') as file:
+        usersStruct = json.load(file)
+    userInformation=""
+    userInformation+="Name: "+str(usersStruct[userId]["profile"]["name"])+"\n"
 
+    for i in range(2,13):
+        question= qnsBank[i]["qns"]
+        answer= usersStruct[userId]["responses"][str(i)]["content"]
+        userInformation+="\n"+question+":"+"\n"+str(answer)+"\n"
+    prompt_template = """Write a concise, one-liner summary of the person given the following profile as well as answers to the following questions:
+    "{text}"
+    CONCISE SUMMARY:"""
+    prompt = PromptTemplate(template=prompt_template, input_variables=["text"])
+
+    model = ChatOpenAI(temperature=0)
+    chain = prompt | model
+    return(chain.invoke({"text": userInformation}).content)
+
+def getAnswerability(userId,qns):
+    with open('user.json', 'r') as file:
+        usersStruct = json.load(file)
+    userInformation=""
+    for fields in usersStruct[userId]["profile"]:
+        userInformation+=fields+": "+str(usersStruct[userId]["profile"][fields])+"\n"
+
+    for i in range(2,13):
+        question= qnsBank[i]["qns"]
+        answer= usersStruct[userId]["responses"][str(i)]["content"]
+        userInformation+="\n"+question+":"+"\n"+str(answer)+"\n"
+
+    response_schemas = [
+        ResponseSchema(name="isAnswerable", description="Boolean value indicating whether there is enough content to answer the question."),
+        ResponseSchema(
+            name="inferredAnswer",
+            description="The inferred answer to the question based on the past answer and user information.",
+        ),
+    ] 
+    output_parser = StructuredOutputParser.from_response_schemas(response_schemas)
+    format_instructions = output_parser.get_format_instructions()
+    prompt = PromptTemplate(
+        template="Given a question and user's information and past answers return a Boolean whether the answer answers the question. Only answer if you are very confident\n \
+            {format_instructions}\n{userInformation}\n{question}",
+        input_variables=["question", "userInformation"],
+        partial_variables={"format_instructions": format_instructions},
+    )
+    #qns="What is your biggest strength?"
+    #qns= "What is your star sign and how does it influence your personality?"
+
+    model = ChatOpenAI(temperature=0)
+    chain = prompt | model | output_parser
+    return (chain.invoke({"question": qns, "userInformation": userInformation}))
 
 if __name__ == '__main__':
     with open('newUsers.json', 'r') as file:

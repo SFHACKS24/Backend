@@ -7,7 +7,7 @@ from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS, cross_origin
 
 from pentagonPlotting import generateRadar
-from llm import checkContent, compareEmbeddings, fastEmbedding
+from llm import checkContent, compareEmbeddings, fastEmbedding, getAnswerability, getSummary
 from db import get_user, update_user
 
 load_dotenv()
@@ -134,6 +134,17 @@ def getQuestion() -> dict[int, Optional[str]]:
         return jsonify({"qnsType": 6, "content": onlyRanking})
     return jsonify({"qnsType": qnsBank[qnsId]["type"], "content": qnsBank[qnsId]["qns"], "qnsId": qnsId})
 
+@app.route("/getRanking", methods=["GET"])
+@cross_origin()
+def getRanking():
+    data = request.get_json()
+    cookie = data["cookie"]
+    handle_cookie(cookie)
+    currUserId = cookieBank[cookie]["userId"]
+    recommendations = getRecommendations(currUserId)
+    onlyRanking = [int(user[0]) for user in recommendations]
+    return jsonify({"content": onlyRanking})
+
 # statuscodes: 0: success, 1: failure (answer too short), 2: found a higher threshold
 # response: {status: int, (optional) prompt: string, (optional) userId: int}
 # input: cookie, answer: str, qnsId: int, isLeadingPromptAns: str, (optional) userId: str. isLeadingPrompt:bool
@@ -245,7 +256,15 @@ def getDirectRecommendation() -> dict[int, Optional[str]]:
     for user in recommendations:
         userId = str(user[0])
         if user[1]["answerable"] == False:  # add leading prompts
-            return jsonify(({"qnsType": 5, "userId": userId, "content": user[1]["leadingPrompts"], "qnsId": userId}))
+            #return jsonify(({"qnsType": 5, "userId": userId, "content": user[1]["leadingPrompts"], "qnsId": userId}))
+            chat= getAnswerability("2", user[1]["leadingPrompts"]) #TODO change back
+            print(chat)
+            if chat["isAnswerable"]:
+                compatibilitiesStruct[currUserId][userId]["answerable"] = True
+                compatibilitiesStruct[currUserId][userId]["answer"] = chat["inferredAnswer"]
+                print("Infereed answer", chat["inferredAnswer"])
+            else:
+                return jsonify(({"qnsType": 5, "userId": userId, "content": user[1]["leadingPrompts"], "qnsId": userId}))
         if user[1]["compatibilityScore"] >= compatibilityThreshold:
             filteredRecommendations.append(user)
     onlyRanking = [int(user[0]) for user in recommendations]
