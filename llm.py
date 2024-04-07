@@ -13,7 +13,8 @@ from openai import Client
 
 load_dotenv()
 OPENAI_API = os.getenv('OPENAI_API_KEY')
-
+with open('qnsBank.json', 'r') as file:
+    qnsBank = json.load(file)
 
 response_schemas = [
     ResponseSchema(

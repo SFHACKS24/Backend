@@ -134,6 +134,17 @@ def getQuestion() -> dict[int, Optional[str]]:
         return jsonify({"qnsType": 6, "content": onlyRanking})
     return jsonify({"qnsType": qnsBank[qnsId]["type"], "content": qnsBank[qnsId]["qns"], "qnsId": qnsId})
 
+@app.route("/getRanking", methods=["GET"])
+@cross_origin()
+def getRanking():
+    data = request.get_json()
+    cookie = data["cookie"]
+    handle_cookie(cookie)
+    currUserId = cookieBank[cookie]["userId"]
+    recommendations = getRecommendations(currUserId)
+    onlyRanking = [int(user[0]) for user in recommendations]
+    return jsonify({"content": onlyRanking})
+
 # statuscodes: 0: success, 1: failure (answer too short), 2: found a higher threshold
 # response: {status: int, (optional) prompt: string, (optional) userId: int}
 # input: cookie, answer: str, qnsId: int, isLeadingPromptAns: str, (optional) userId: str. isLeadingPrompt:bool
