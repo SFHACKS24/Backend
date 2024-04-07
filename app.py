@@ -211,11 +211,11 @@ def submitAnswer() -> dict[int, Optional[str], Optional[int]]:
         if qnsType == 2:  # free text qns content check
             print("free text qns", qnsBank[qnsId]["qns"], answer)
             chat = checkContent(qnsBank[qnsId]["qns"], answer)
-            # isLong = chat["isEnough"]
-            # prompt = chat["FollowUpPrompt"]
-            # print(isLong, prompt)
-            # if not isLong:
-            #     return jsonify({"status": 1, "prompt": prompt})
+            isLong = chat["isEnough"]
+            prompt = chat["FollowUpPrompt"]
+            print(isLong, prompt)
+            if not isLong:
+                return jsonify({"status": 1, "prompt": prompt})
             # generate embedding
             embedding = fastEmbedding(answer)
             usersStruct[currUserId]["responses"][str(qnsId)] = {
