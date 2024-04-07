@@ -1,13 +1,15 @@
-from langchain_openai import OpenAI, ChatOpenAI
+import json
+import os
+from dotenv import load_dotenv
+
 import faiss
+import numpy as np
 from fastembed import TextEmbedding as Embedding
-from openai import Client
 from langchain.output_parsers import ResponseSchema, StructuredOutputParser
 from langchain_core.prompts import PromptTemplate
-import json
-from dotenv import load_dotenv
-import os
-import numpy as np
+from langchain_openai import ChatOpenAI, OpenAI
+from openai import Client
+
 load_dotenv()
 OPENAI_API = os.getenv('OPENAI_API_KEY')
 

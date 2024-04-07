@@ -1,36 +1,36 @@
 {
-    "0": {
-        "1": {
-            "qnsRanking": [],
-            "compatibilityScore": 0,
-            "leadingPrompts": "What is your star sign and how does it influence your personality?",
-            "answerable": false,
-            "answer": "",
-            "isBlacklisted": false
-        },
-        "2": {
-            "qnsRanking": [],
-            "compatibilityScore": 0,
-            "leadingPrompts": "What's your favorite way to unwind after a long day?",
-            "answerable": true,
-            "answer": "Difficult roads often lead to beautiful destinations",
-            "isBlacklisted": false
-        },
-        "3": {
-            "qnsRanking": [],
-            "compatibilityScore": 0,
-            "leadingPrompts": "Whats your favourite food to cook and why?",
-            "answerable": true,
-            "answer": "Life is a journey, not a destination.",
-            "isBlacklisted": false
-        },
-        "4": {
-            "qnsRanking": [],
-            "compatibilityScore": 0,
-            "leadingPrompts": "What is the meaning of life to you?",
-            "answerable": true,
-            "answer": "Live Laugh Love",
-            "isBlacklisted": false
-        }
+  "0": {
+    "1": {
+      "qnsRanking": [],
+      "compatibilityScore": 0,
+      "leadingPrompts": "What is your star sign and how does it influence your personality?",
+      "answerable": false,
+      "answer": "",
+      "isBlacklisted": false
+    },
+    "2": {
+      "qnsRanking": [],
+      "compatibilityScore": 0,
+      "leadingPrompts": "What's your favorite way to unwind after a long day?",
+      "answerable": true,
+      "answer": "Difficult roads often lead to beautiful destinations",
+      "isBlacklisted": false
+    },
+    "3": {
+      "qnsRanking": [],
+      "compatibilityScore": 0,
+      "leadingPrompts": "Whats your favourite food to cook and why?",
+      "answerable": false,
+      "answer": "Life is a journey, not a destination.",
+      "isBlacklisted": false
+    },
+    "4": {
+      "qnsRanking": [],
+      "compatibilityScore": 0,
+      "leadingPrompts": "What is the meaning of life to you?",
+      "answerable": true,
+      "answer": "Live Laugh Love",
+      "isBlacklisted": false
     }
+  }
 }

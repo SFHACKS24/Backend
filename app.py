@@ -1,10 +1,16 @@
+import json
+from typing import Optional
+import numpy as np
+from dotenv import load_dotenv
+
 from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS, cross_origin
-import json
-import numpy as np
+
 from pentagonPlotting import generateRadar
 from llm import checkContent, compareEmbeddings, fastEmbedding
-from typing import Optional
+from db import get_user, update_user
+
+load_dotenv()
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -16,9 +22,9 @@ with open('qnsBank.json', 'r') as file:
     qnsBank = json.load(file)
 
 numQns = len(qnsBank)
-nonNegotiableQns = [13] #vices, budget
+nonNegotiableQns = [13]  # vices, budget
 cookieBank = {}
-compatibilityThreshold = 10
+compatibilityThreshold = 5
 
 # number is userId
 with open('user.json', 'r') as file:
@@ -49,9 +55,9 @@ def handle_cookie(cookie):
         #             "compatibilityScore": 0, "qnsRanking": [], "answer": "", "isBlacklisted": False, "answerable": False}
 
 
-@app.route("/saveProfileInfo", methods=["POST"])
+@app.route("/user/profile", methods=["POST"])
 @cross_origin()
-def saveProfileInfo():
+def update_profile():
     data = request.get_json()
     cookie = str(data["cookie"])
     handle_cookie(cookie)
@@ -63,33 +69,46 @@ def saveProfileInfo():
     usersStruct[currUserId]["profile"]["location"] = data["location"]
     usersStruct[currUserId]["profile"]["budget"] = int(data["budget"])
     usersStruct[currUserId]["profile"]["room"] = bool(data["room"])
+    # curr_user_id = cookieBank[cookie]["userId"]
+    # profile_info = {
+    #     "name": data.get("name", "Unnamed"),
+    #     "age": data.get("age", 0),
+    #     "gender": data.get("gender", "PNTS"),
+    #     "occupation": data.get("occupation", ""),
+    #     "location": data.get("location", ""),
+    #     "budget": data.get("budget", 0),
+    #     "room": data.get("room", False)
+    # }
+    # update_user(curr_user_id, profile_info)
+    return jsonify({"status": "ok"})
 
 # input:list of userIds
 # output: list of dict[**userprofile, compatibilityScore, qnsRanking, answer]
 
 
-@app.route("/getUsersInformation", methods=["POST"])
+@app.route("/user/profile", methods=["GET"])
 @cross_origin()
-def getUersInformation():
+def get_profile():
     data = request.get_json()
     cookie = str(data["cookie"])
     handle_cookie(cookie)
-    currUserId = cookieBank[cookie]["userId"]
-    userIds = data["userIds"]
-    userInformation = []
-    for id in userIds:
-        id= str(id)
+    curr_user_id = cookieBank[cookie]["userId"]
+    user_ids = data["userIds"]
+    user_infos = []
+    for id in user_ids:
         user = usersStruct[id]
-        user["compatibilityScore"] = int(compatibilitiesStruct[currUserId][id]["compatibilityScore"])
-        user["qnsRanking"] = compatibilitiesStruct[currUserId][id]["qnsRanking"]
-        user["answer"] = str(compatibilitiesStruct[currUserId][id]["answer"])
-        userInformation.append(user)
-    return jsonify(userInformation)
+        user["compatibilityScore"] = compatibilitiesStruct[curr_user_id][id]["compatibilityScore"]
+        user["qnsRanking"] = compatibilitiesStruct[curr_user_id][id]["qnsRanking"]
+        user["answer"] = compatibilitiesStruct[curr_user_id][id]["answer"]
+        user_infos.append(user)
+    return jsonify(user_infos)
 
 # qnstypes: 0: binary, 1: scaled, 2: text, 3: weightage, 4: enter your leading prompt, 5: unanswered leading prompt, 6: recommendations
 # response: {qnsTypes: int, (optional) content: string, (optional)userId: int} TODO if 6, gdluck
 # ONLY 6: list [userIds: int]
 # input: cookie
+
+
 @app.route("/getQuestion", methods=["POST"])
 @cross_origin()
 def getQuestion() -> dict[int, Optional[str]]:
@@ -130,8 +149,7 @@ def submitAnswer() -> dict[int, Optional[str], Optional[int]]:
     isLeadingPrompt = bool(data["isLeadingPrompt"])  # NEW
     maxCompatibilityScore = 0
     maxCompatibilityUserId = None
-    cookieBank[cookie]["qnsId"] = qnsId+1
-    if isLeadingPromptAns:  
+    if isLeadingPromptAns:
         userId = str(data["userId"])
         compatibilitiesStruct[currUserId][userId]["answerable"] = True
         compatibilitiesStruct[currUserId][userId]["answer"] = answer
@@ -140,17 +158,18 @@ def submitAnswer() -> dict[int, Optional[str], Optional[int]]:
     # if weightage qns
     elif qnsId == 0:
         usersStruct[currUserId]["responses"][str(qnsId)]["content"] = answer
-        print("HighWeightage", usersStruct[currUserId]["responses"][str(qnsId)]["content"])
+        print("HighWeightage", usersStruct[currUserId]
+              ["responses"][str(qnsId)]["content"])
     elif qnsId == 1:
         print(usersStruct[currUserId]["responses"])
         usersStruct[currUserId]["responses"][str(qnsId)]["content"] = answer
         print("LowWeightage", usersStruct[currUserId]["responses"][str(qnsId)])
     elif qnsId in nonNegotiableQns:  # blacklisting
         for user in usersStruct:
-            if user != currUserId and usersStruct[user]["responses"][str(qnsId)]["content"] != answer or usersStruct[user]["profile"]["Budget"] > 3* usersStruct[currUserId]["profile"]["Budget"]:
+            if user != currUserId and usersStruct[user]["responses"][str(qnsId)]["content"] != answer or usersStruct[user]["profile"]["Budget"] > 3 * usersStruct[currUserId]["profile"]["Budget"]:
                 compatibilitiesStruct[currUserId][user]["isBlacklisted"] = True
                 print("Blacklisted user", user)
-        #print("final compatiability", compatibilitiesStruct[currUserId])
+        # print("final compatiability", compatibilitiesStruct[currUserId])
         usersStruct[currUserId]["responses"][str(qnsId)]["content"] = answer
     elif isLeadingPrompt:  # leading prompts-> send one at a time or multiple? one time
         # leadingPrompts= usersStruct[currUserId]["leadingPrompt"]
@@ -177,25 +196,30 @@ def submitAnswer() -> dict[int, Optional[str], Optional[int]]:
                 "content": answer, "embedding": embedding}
             # print(embedding)
         else:
-            usersStruct[currUserId]["responses"][str(qnsId)]["content"] = answer
+            usersStruct[currUserId]["responses"][str(
+                qnsId)]["content"] = answer
         print("Stored Anser", usersStruct[currUserId]["responses"][str(qnsId)])
         # print('question type', qnsType, qnsId)
         userRankings = getRankings(qnsId, int(qnsType), answer, currUserId)
         print("userRankings", userRankings)
         for idx, userList in enumerate(userRankings):
-            rank=idx+1
+            rank = idx+1
             for user in userList:
                 if compatibilitiesStruct[currUserId][user]["isBlacklisted"] == False:
-                    compatibilitiesStruct[currUserId][user]["qnsRanking"].append(rank)
-                    compatibilityScore= calculateScore(currUserId, compatibilitiesStruct[currUserId][user]["compatibilityScore"],qnsId,rank)
-                    compatibilitiesStruct[currUserId][user]["compatibilityScore"]=compatibilityScore
-                    print("compatibilityScore for user", user, compatibilityScore)
-                    if compatibilityScore>compatibilityThreshold:
-                        maxCompatibilityUserId=user
-                    maxCompatibilityScore= max(maxCompatibilityScore,compatibilityScore)
-        usersStruct[currUserId]["responses"][qnsId]=answer
+                    compatibilitiesStruct[currUserId][user]["qnsRanking"].append(
+                        rank)
+                    compatibilityScore = calculateScore(
+                        currUserId, compatibilitiesStruct[currUserId][user]["compatibilityScore"], qnsId, rank)
+                    compatibilitiesStruct[currUserId][user]["compatibilityScore"] = compatibilityScore
+                    print("compatibilityScore for user",
+                          user, compatibilityScore)
+                    if compatibilityScore > compatibilityThreshold:
+                        maxCompatibilityUserId = user
+                    maxCompatibilityScore = max(
+                        maxCompatibilityScore, compatibilityScore)
+        usersStruct[currUserId]["responses"][qnsId] = answer
     # store answer
-
+    cookieBank[cookie]["qnsId"] = qnsId+1
     if maxCompatibilityScore > compatibilityThreshold:
         return jsonify({"status": 2, "userId": maxCompatibilityUserId})
     return jsonify({"status": 0})
@@ -218,7 +242,7 @@ def getDirectRecommendation() -> dict[int, Optional[str]]:
     for user in recommendations:
         userId = str(user[0])
         if user[1]["answerable"] == False:  # add leading prompts
-            return jsonify(({"qnsType": 5, "userId": userId, "content": user[1]["leadingPrompts"]}))
+            return jsonify(({"qnsType": 5, "userId": userId, "content": user[1]["leadingPrompts"], "qnsId": userId}))
         if user[1]["compatibilityScore"] >= compatibilityThreshold:
             filteredRecommendations.append(user)
     onlyRanking = [int(user[0]) for user in recommendations]
@@ -242,14 +266,15 @@ def get_image():
 def getRankings(qnsId, qnsType, answer, currUserId):
     # if binary
     if qnsType == 0:
-        return [[userId for userId in usersStruct if usersStruct[userId]["responses"][str(qnsId)]["content"] == answer and userId!=currUserId], [userId for userId in usersStruct if usersStruct[userId]["responses"][str(qnsId)]["content"] != answer and userId!=currUserId]]
+        return [[userId for userId in usersStruct if usersStruct[userId]["responses"][str(qnsId)]["content"] == answer and userId != currUserId], [userId for userId in usersStruct if usersStruct[userId]["responses"][str(qnsId)]["content"] != answer and userId != currUserId]]
     # if scaled
     elif qnsType == 1:
         # rank userId based on how similar their answer is to user0's answer
-        rankings = [[]for _ in range(10)]  # RANGE IS 0-10
+        rankings = [[]for _ in range(11)]  # RANGE IS 0-10
         for userId in usersStruct:
             if userId != currUserId:
-                rankings[abs(usersStruct[userId]["responses"][str(qnsId)]["content"]-answer)].append(userId)
+                rankings[abs(usersStruct[userId]["responses"]
+                             [str(qnsId)]["content"]-answer)].append(userId)
         return [rank for rank in rankings if rank]
     else:  # free text answers
         embeddingList = [np.array([usersStruct[user]["responses"][str(qnsId)]["embedding"]])
