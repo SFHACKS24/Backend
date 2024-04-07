@@ -2,107 +2,35 @@
     "0": {
         "1": {
             "qnsRanking": [],
-            "compatibilityScore": 5,
-            "leadingPrompts": "What is your favourite colour?",
-            "answerable": true,
-            "answer": "Blue",
-            "isBlacklisted": false
-        },
-        "2": {
-            "qnsRanking": [],
-            "compatibilityScore": 2,
-            "leadingPrompts": "What is your favourite colour?",
+            "compatibilityScore": 0,
+            "leadingPrompts": "What is your star sign and how does it influence your personality?",
             "answerable": false,
             "answer": "",
             "isBlacklisted": false
         },
-        "3": {
+        "2": {
             "qnsRanking": [],
-            "compatibilityScore": 3,
-            "leadingPrompts": "What is your favourite colour?",
-            "answerable": true,
-            "answer": "Red",
-            "isBlacklisted": true
-        },
-        "4": {
-            "qnsRanking": [],
-            "compatibilityScore": 1,
-            "leadingPrompts": "What is your favourite colour?",
+            "compatibilityScore": 0,
+            "leadingPrompts": "What's your favorite way to unwind after a long day?",
             "answerable": false,
-            "answer": "",
-            "isBlacklisted": true
-        }
-    },
-    "1": {
-        "0": {
-            "qnsRanking": [],
-            "compatibilityScore": 0
-        },
-        "2": {
-            "qnsRanking": [],
-            "compatibilityScore": 0
+            "answer": "Difficult roads often lead to beautiful destinations",
+            "isBlacklisted": false
         },
         "3": {
             "qnsRanking": [],
-            "compatibilityScore": 0
+            "compatibilityScore": 0,
+            "leadingPrompts": "Whats your favourite food to cook and why?",
+            "answerable": true,
+            "answer": "Life is a journey, not a destination.",
+            "isBlacklisted": false
         },
         "4": {
             "qnsRanking": [],
-            "compatibilityScore": 0
-        }
-    },
-    "2": {
-        "0": {
-            "qnsRanking": [],
-            "compatibilityScore": 0
-        },
-        "1": {
-            "qnsRanking": [],
-            "compatibilityScore": 0
-        },
-        "3": {
-            "qnsRanking": [],
-            "compatibilityScore": 0
-        },
-        "4": {
-            "qnsRanking": [],
-            "compatibilityScore": 0
-        }
-    },
-    "3": {
-        "0": {
-            "qnsRanking": [],
-            "compatibilityScore": 0
-        },
-        "1": {
-            "qnsRanking": [],
-            "compatibilityScore": 0
-        },
-        "2": {
-            "qnsRanking": [],
-            "compatibilityScore": 0
-        },
-        "4": {
-            "qnsRanking": [],
-            "compatibilityScore": 0
-        }
-    },
-    "4": {
-        "0": {
-            "qnsRanking": [],
-            "compatibilityScore": 0
-        },
-        "1": {
-            "qnsRanking": [],
-            "compatibilityScore": 0
-        },
-        "2": {
-            "qnsRanking": [],
-            "compatibilityScore": 0
-        },
-        "3": {
-            "qnsRanking": [],
-            "compatibilityScore": 0
+            "compatibilityScore": 0,
+            "leadingPrompts": "What is the meaning of life to you?",
+            "answerable": true,
+            "answer": "Live Laugh Love",
+            "isBlacklisted": false
         }
     }
 }
