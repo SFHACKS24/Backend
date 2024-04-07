@@ -8,11 +8,11 @@
     "type": 3
   },
   {
-    "qns": "On a scale from 1 to 10, how would you rate your preference for daily communication with your roommate? A score of 1 indicates a preference for minimal direct communication (e.g., only discussing essential matters or emergencies), while a score of 10 indicates a desire for frequent, open conversations about both day-to-day activities and deeper topics.",
+    "qns": "On a scale from 1 to 10, how would you rate your preference for daily communication with your roommate? 1: preference for minimal direct communication, 10: desire for frequent, open conversations about both day-to-day activities and deeper topics.",
     "type": 1
   },
   {
-    "qns": "On a scale from 1 to 10, how important is it for you to have clearly defined personal spaces and boundaries within your living situation? A score of 1 suggests you are very flexible about sharing your space and belongings, and do not feel a strong need for personal boundaries. A score of 10 indicates a strong preference for clear personal boundaries, including exclusive use of your belongings and private spaces.",
+    "qns": "On a scale from 1 to 10, how important is it for you to have clearly defined personal spaces and boundaries within your living situation? 1: very flexible about sharing your space and belongings, 10: strong preference for clear personal boundaries. ",
     "type": 1
   },
   {
@@ -40,11 +40,11 @@
     "type": 0
   },
   {
-    "qns": "Rate your adaptability to changes in your living environment on a scale from 1 to 10. A score of 1 means changes in your living situation or routines significantly unsettle you, and you prefer everything to remain constant. A score of 10 suggests you easily adapt to changes and are comfortable with varying routines, unexpected guests, or shifts in household dynamics.",
+    "qns": "Rate your adaptability to changes in your living environment on a scale from 1 to 10. 1: changes in your living situation or routines significantly unsettle you. 10: easily adapt to changes and are comfortable with varying routines, unexpected guests, or shifts in household dynamics.",
     "type": 1
   },
   {
-    "qns": "On a scale from 1 to 10, how open are you to living with pets? A score of 1 indicates a strong preference against having pets in your living space, possibly due to allergies, fear, or dislike of animals. A score of 10 indicates not only a willingness but also enthusiasm about living with pets, regardless of type or size.",
+    "qns": "On a scale from 1 to 10, how open are you to living with pets? 1: strong preference against having pets in your living space. 10: not only a willingness but also enthusiasm about living with pets, regardless of type or size.",
     "type": 1
   },
   {
