@@ -112,7 +112,7 @@ def generateRadar(data):
 
     ax.set_rgrids([1,2,3,4])
     line = ax.plot(theta, case_data, color='blue')
-    ax.fill(theta, case_data, alpha=0.3, color='blue')
+    ax.fill(theta, case_data, alpha=0.3, color='green')
 
     ax.set_varlabels(spoke_labels)
     #ax.legend(loc='upper left')
