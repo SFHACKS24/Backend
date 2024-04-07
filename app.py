@@ -24,7 +24,7 @@ with open('qnsBank.json', 'r') as file:
 numQns = len(qnsBank)
 nonNegotiableQns = [13]  # vices, budget
 cookieBank = {}
-compatibilityThreshold = 5
+compatibilityThreshold = 0
 
 # number is userId
 with open('user.json', 'r') as file:

@@ -1,16 +1,19 @@
 import numpy as np
 
-import matplotlib.pyplot as plt
+from matplotlib import pyplot as plt
 from matplotlib.patches import Circle, RegularPolygon
 from matplotlib.path import Path
 from matplotlib.projections.polar import PolarAxes
 from matplotlib.projections import register_projection
 from matplotlib.spines import Spine
 from matplotlib.transforms import Affine2D
-from flask import Flask, send_file
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
+from flask import Response
 import io
 
-app = Flask(__name__)
+# app = Flask(__name__)
+
 
 def radar_factory(num_vars, frame='circle'):
     """Create a radar chart with `num_vars` axes.
@@ -77,7 +80,6 @@ def radar_factory(num_vars, frame='circle'):
                     gl.get_path()._interpolation_steps = num_vars
             super().draw(renderer)
 
-
         def _gen_axes_spines(self):
             if frame == 'circle':
                 return super()._gen_axes_spines()
@@ -98,7 +100,10 @@ def radar_factory(num_vars, frame='circle'):
     register_projection(RadarAxes)
     return theta
 
-traits= ["Communication","Boundaries", "Financial Responsibilities","Compromise", "Ownership", "Cleanliness", "Similar Interests", "Reliability", "Adaptability", "Pets", "Quiet Hours", "Vice Usage"]
+
+traits = ["Communication", "Boundaries", "Financial Responsibilities", "Compromise", "Ownership",
+          "Cleanliness", "Similar Interests", "Reliability", "Adaptability", "Pets", "Quiet Hours", "Vice Usage"]
+
 
 def generateRadar(data):
     N = len(data[0])
@@ -110,14 +115,12 @@ def generateRadar(data):
     fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(projection='radar'))
     fig.subplots_adjust(top=0.85, bottom=0.05)
 
-    ax.set_rgrids([1,2,3,4])
+    ax.set_rgrids([1, 2, 3, 4])
     line = ax.plot(theta, case_data, color='blue')
     ax.fill(theta, case_data, alpha=0.3, color='green')
 
     ax.set_varlabels(spoke_labels)
-    #ax.legend(loc='upper left')
+    # ax.legend(loc='upper left')
     img_buffer = io.BytesIO()
-    plt.savefig(img_buffer, format='png')
-    img_buffer.seek(0)
-    plt.close()
-    return img_buffer
+    FigureCanvas(plt.gcf()).print_png(img_buffer)
+    return Response(img_buffer.getvalue(), mimetype='image/png')
