@@ -104,7 +104,7 @@ def get_profile():
         while len(user["qnsRanking"]) < numQns:
             user["qnsRanking"].append(3)
         user["answer"] = str(compatibilitiesStruct[currUserId][id]["answer"])
-        user["summary"]=getSummary(id)
+        user["summary"] = getSummary(id)
         userInformation.append(user)
     return jsonify(userInformation)
 
@@ -132,15 +132,15 @@ def getQuestion() -> dict[int, Optional[str]]:
             userId = user[0]
             if user[1]["answerable"] == False:
                 chat = getAnswerability(
-                currUserId, user[1]["leadingPrompts"])  # TODO change back
+                    currUserId, user[1]["leadingPrompts"])  # TODO change back
                 print(chat)
                 if chat["isAnswerable"]:
                     compatibilitiesStruct[currUserId][userId]["answerable"] = True
                     compatibilitiesStruct[currUserId][userId]["answer"] = chat["inferredAnswer"]
                     print("Infereed answer", chat["inferredAnswer"])
                 else:
-                    return jsonify(({"qnsType": 5, "userId": userId, "content": user[1]["leadingPrompts"], "qnsId": userId}))
-                    #return jsonify(({"qnsType": 5, "userId": userId, "content": user[1]["leadingPrompts"], "qnsId": qnsId}))
+                    return jsonify(({"qnsType": 5, "userId": userId, "content": user[1]["leadingPrompts"], "qnsId": qnsId}))
+                    # return jsonify(({"qnsType": 5, "userId": userId, "content": user[1]["leadingPrompts"], "qnsId": qnsId}))
         onlyRanking = [int(user[0]) for user in recommendations]
         return jsonify({"qnsType": 6, "content": onlyRanking})
     return jsonify({"qnsType": qnsBank[qnsId]["type"], "content": qnsBank[qnsId]["qns"], "qnsId": qnsId})
@@ -296,14 +296,17 @@ def get_image():
     img_buffer = generateRadar(data)
     return send_file(img_buffer, mimetype='image/png')
 
+
 @app.route("/getSummary", methods=["POST"])
 @cross_origin()
-def getSummary():
+def get_user_summary():
     data = request.get_json()
     userId = data["userId"]
-    return jsonify({"content":getSummary(userId)})
+    return jsonify({"content": getSummary(userId)})
 
 # structure: array of userIds, idx corresponding to rank
+
+
 def getRankings(qnsId, qnsType, answer, currUserId):
     # if binary
     if qnsType == 0:
