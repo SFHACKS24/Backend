@@ -298,7 +298,7 @@ def get_image():
 
 @app.route("/getSummary", methods=["POST"])
 @cross_origin()
-def getSummary():
+def getSummaryForUser():
     data = request.get_json()
     userId = data["userId"]
     return jsonify({"content":getSummary(userId)})
