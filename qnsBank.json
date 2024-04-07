@@ -1,49 +1,49 @@
 [
     {
-        "qns": "Welcome to Roomieville, where the quest for the perfect roommate awaits! As you embark on your journey, you must select the top few traits most important to you:\n Imagine standing before the Great Wall of Roomie Criteria, adorned with scrolls representing communication, boundaries, financial responsibilities, compromise, ownership, cleanliness, similar interests, reliability, adaptability, vice usage, pets, and quiet hours.\n With only a few scrolls to guide you, which traits will you prioritize? Choose wisely, for your selection will shape the course of your roommate quest in Roomieville!",
+        "qns": "Given the following traits, what do you value most in a roommate? List wisely.",
         "type": 3
     },
     {
-        "qns": "Welcome back to Roomieville! Now that you've chosen your top few traits, let's delve deeper into your preferences by considering the less important traits.\n Picture yourself once again standing before the Great Wall of Roomie Criteria, adorned with scrolls representing communication, boundaries, financial responsibilities, compromise, ownership, cleanliness, similar interests, reliability, adaptability, vice usage, pets, and quiet hours.\n While some traits took precedence in your selection, others may not hold as much weight. Which of these traits will you deem less important in your ideal roommate? Consider carefully, as this decision will still influence the harmony of your living situation in Roomieville!",
+        "qns": "Given the following traits, what do you think is not that important in a roommate? List wisely.",
         "type": 3
     },
     {
-        "qns": "In the grand arena of 'Domestic Harmony: The Quest for Peace,' you're faced with the inevitable dragon of disagreement. As a valiant inhabitant of this shared castle, your approach to battling this beast is crucial for maintaining the peace within the kingdom's walls. On the scale of strategic combat, where 1 is retreating to your tower to devise a plan (needing time to process before discussing), 5 is summoning the council for a treaty (seeking a compromise), and 10 is drawing your sword to address the dragon head-on (addressing it directly), how do you rate your preferred method of engagement? Choose wisely, brave soul, for your strategy informs the tales of harmony (or discord) sung by the minstrels.",
+        "qns": "On a scale from 1 to 10, how would you rate your preference for daily communication with your roommate? A score of 1 indicates a preference for minimal direct communication (e.g., only discussing essential matters or emergencies), while a score of 10 indicates a desire for frequent, open conversations about both day-to-day activities and deeper topics.",
         "type": 1
     },
     {
-        "qns": "In the bustling village of Roomieville, where shared spaces and personal nooks coexist, you're tasked with drafting the Roomie Code—a guide that balances alone time with social gatherings, and personal chores with shared duties. On a scale from 1 to 10, where 1 suggests these rules are more like loose guidelines (not important at all) and 10 means they're the heart and soul of Roomieville's peace (extremely important), how crucial do you think setting these boundaries is for a harmonious co-living experience? Your rating will carve the path to understanding and respect among all villagers.",
+        "qns": "On a scale from 1 to 10, how important is it for you to have clearly defined personal spaces and boundaries within your living situation? A score of 1 suggests you are very flexible about sharing your space and belongings, and do not feel a strong need for personal boundaries. A score of 10 indicates a strong preference for clear personal boundaries, including exclusive use of your belongings and private spaces.",
         "type": 1
     },
     {
-        "qns": "In the enchanted land of Roomiemore, where the treasures of financial responsibility gleam, you're faced with a crucial decision at the Crossroads of Coin. True or false: You believe in the magic of diligent management of monthly expenses such as rent and utilities as the key to prosperity in Roomiemore. Choose wisely, for your answer will determine whether the gates to the vaults of fiscal harmony swing open wide or remain firmly shut.",
+        "qns": "How important is it for you to manage financial obligations, such as rent and utilities, in a timely manner? (Very Important [True] / Not a Priority [False]).",
         "type": 0
     },{
-        "qns": "You've landed in the classic roommate conundrum: You're a lover of serene, quiet evenings, but your roommate is the social butterfly of the year, wanting to host the social event of the week, every week, in your shared space. With the stage set for an epic showdown of preferences, how do you script the next scene? How do you navigate this lively plot twist to pen a compromise that gets a thumbs-up from both critics?",
-        "type": 2
-    },
-    {
-        "qns": "In the latest episode of 'Roomies: The Shared Saga,' you find yourself at a crossroads over the communal cloak of Comfort—a.k.a. your favorite super-soft blanket. Your roommate, drawn to its allure, sees it as a shared treasure, while you view it as a personal relic not up for the communal draft. With the lines of personal items and shared booty blurred, how do you set the scene for a dialogue about the map of boundaries and expectations? Spin us the tale of how you navigate these treacherous waters, marking X on what's solely yours and what's for the crew.",
-        "type": 2
-    },
-    {
-        "qns": "In the next thrilling chapter of 'The Chronicles of Cleanliness: Shared Spaces Edition,' you're the hero(ine) tasked with maintaining the harmony of the kingdom—er, apartment—through the magic of tidiness. As you wield your enchanted broom and dustpan, how do you ensure the dragons of disorder and the goblins of grime don't overrun the common realms of Kitchenland and Living Roomania? Describe your mystical rituals of cleanliness that keep the peace, and how you enlist the aid of your fellow knight-roommate in this noble quest. What are the sacred scrolls (a.k.a. cleaning standards) you both swear to uphold for the good of the realm?",
-        "type": 2
-    },
-    {
-        "qns": "In the bustling town of Roomieville, where each door holds a world of possibilities, you find yourself at the threshold of companionship. As you envision the adventures that await within your shared abode, you ponder the tapestry of interests that could weave between you and your potential roommate. Picture this: You're sitting at the cozy hearth, chatting with your prospective cohabitant. The fire crackles merrily as you share tales of your passions and hobbies. Are there any pursuits close to your heart that you dream of sharing with a kindred spirit? Or perhaps you're eager to embark on a journey of exploration, open to new experiences and discoveries. Paint us a picture of the shared adventures that await in the halls of Roomieville.",
-        "type": 2
-    },
-    {
-        "qns": "In the mystical land of Roomieville, where adventures and mishaps await around every corner, you find yourself amidst tales of reliance and camaraderie. True or false: Have you ever embarked on a daring quest, relying on a roommate to be your trusty sidekick in times of need, or have they turned to you as the valiant hero in their hour of peril? ",
+        "qns": "How much do you value the ability to adapt and make compromises in your living situation to ensure a harmonious environment for all residents? (Very Important [True] / Not Important [False])",
         "type": 0
     },
     {
-        "qns": "Welcome to Roomietopia, where surprises abound and flexibility reigns supreme. Imagine waking up to unexpected guests, a shift in shared responsibilities, and schedules in flux.\nOn a scale of 1 to 10, how adept are you at adapting to these changes? Are you a steadfast rock or a flexible reed in the winds of change? Your numerical response will reveal your adaptability in Roomietopia!",
+        "qns": "Imagine you're the captain of a ship that's hit a small iceberg, causing a minor leak. Everyone on board looks to you; what's your plan to address the situation and keep the crew calm and collected?",
+        "type": 2
+    },
+    {
+        "qns": "Imagine coming home after a long day to find the living room and kitchen in a bit of disarray, with dishes in the sink, some clutter on the table, and the floor needing a sweep. What's your immediate reaction and how would you address this situation, especially if it became a recurring scenario with your roommate?",
+        "type": 2
+    },
+    {
+        "qns": " If you could organize the perfect day out with your future roommate, filled with activities that reflect your shared interests, what would it look like from dawn till dusk?",
+        "type": 2
+    },
+    {
+        "qns": "When it comes to household responsibilities and commitments, how much do you prioritize ensuring they are handled promptly and without needing to be reminded? (High Priority [True] / Low Priority [False])",
+        "type": 0
+    },
+    {
+        "qns": "Rate your adaptability to changes in your living environment on a scale from 1 to 10. A score of 1 means changes in your living situation or routines significantly unsettle you, and you prefer everything to remain constant. A score of 10 suggests you easily adapt to changes and are comfortable with varying routines, unexpected guests, or shifts in household dynamics.",
         "type": 1
     },
     {
-        "qns": "In the whimsical realm of Petopia, where furry friends frolic and feathers fly, you find yourself amidst a menagerie of magical creatures. Picture this: you awaken one morning to the delightful chirping of a dragon hatchling nestled in its cozy nest by the window, while a mischievous unicorn foal prances around the room, leaving a trail of glitter in its wake. As you bask in the warmth of their companionship, you contemplate your preferences and any fears that may lurk in the shadows of this enchanted land.\n On a scale of 1 to 10, where 1 is as timid as a mouse and 10 is as bold as a lion, how do you rate your readiness to embrace the whimsical wonders of Petopia? Are you eager to cuddle with creatures great and small, or do you find yourself trembling at the mere thought of a playful puppy or a curious kitten? Cast your numerical spell and let us discover the depths of your affinity for the magical creatures that roam the lands of Petopia!",
+        "qns": "On a scale from 1 to 10, how open are you to living with pets? A score of 1 indicates a strong preference against having pets in your living space, possibly due to allergies, fear, or dislike of animals. A score of 10 indicates not only a willingness but also enthusiasm about living with pets, regardless of type or size.",
         "type": 1
     },
     {
@@ -51,7 +51,7 @@
         "type": 1
     },
     {
-        "qns": "In the enchanted castle of Roomiehaven, where laughter echoes through the halls and secrets linger in the air, you stand at the threshold of lifestyle choices and harmony. True or false: What say you on the presence of elixirs and enchanted potions like alcohol, tobacco, or other substances within the hallowed walls of our abode? ",
+        "qns": "How important is it for you to live in a home environment that maintains a certain lifestyle standard, specifically regarding the use or non-use of substances like alcohol, tobacco, and other recreational drugs? (Very Important [True] / Not Important [False])",
         "type": 0
     }
 ]
