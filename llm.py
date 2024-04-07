@@ -1,19 +1,20 @@
+from langchain_openai import OpenAI, ChatOpenAI
+import faiss
+from fastembed import TextEmbedding as Embedding
+from openai import Client
+from langchain.output_parsers import ResponseSchema, StructuredOutputParser
+from langchain_core.prompts import PromptTemplate
 import json
 from dotenv import load_dotenv
 import os
 import numpy as np
 load_dotenv()
-OPENAI_API= os.getenv('OPENAI_API_KEY')
+OPENAI_API = os.getenv('OPENAI_API_KEY')
 
-from langchain_core.prompts import PromptTemplate
-from langchain_openai import OpenAI,ChatOpenAI
-from langchain.output_parsers import ResponseSchema, StructuredOutputParser
-from openai import Client
-from fastembed.embedding import TextEmbedding as Embedding
-import faiss
 
 response_schemas = [
-    ResponseSchema(name="isEnough", description="Boolean value indicating whether the answer provides enough content."),
+    ResponseSchema(
+        name="isEnough", description="Boolean value indicating whether the answer provides enough content."),
     ResponseSchema(
         name="FollowUpPrompt",
         description="a follow up prompt to ask for more information if the answer does not answer the question.",
@@ -39,32 +40,38 @@ def checkContent(question, answer):
 
 
 def calculateEmbeddings(text):
-    client= Client()
-    response= client.embeddings.create(input= text, model= "text-embedding-3-small")
+    client = Client()
+    response = client.embeddings.create(
+        input=text, model="text-embedding-3-small")
     return response.data[0].embedding
 
+
 def fastEmbedding(text):
-    embedding_model = Embedding(model_name="BAAI/bge-large-en-v1.5", max_length=512)
-    embedding= embedding_model.embed(text)
+    embedding_model = Embedding(
+        model_name="BAAI/bge-large-en-v1.5", max_length=512)
+    embedding = embedding_model.embed(text)
     return list(embedding)[0].tolist()
 
 
-def compareEmbeddings(userEmbedding, embeddingList): #TODO yet to check
+def compareEmbeddings(userEmbedding, embeddingList):  # TODO yet to check
     d = 1024  # dimensionality of your embedding data #1024
     k = 4  # number of nearest neighbors to return
     index = faiss.IndexFlatIP(d)
     for em in embeddingList:
         index.add(em)
     D, I = index.search(userEmbedding, k)
-    print(D,I)
+    print(D, I)
     return I
 
-if __name__ == '__main__':  
+
+if __name__ == '__main__':
     with open('newUsers.json', 'r') as file:
         usersStruct = json.load(file)
-    currUserId="0"
-    embeddingList=[np.array([usersStruct[user]["responses"]["3"]["embedding"]]) for user in usersStruct if user!=currUserId]
-    compareEmbeddings(np.array([usersStruct[currUserId]["responses"]["3"]["embedding"]]), embeddingList)
+    currUserId = "0"
+    embeddingList = [np.array([usersStruct[user]["responses"]["3"]["embedding"]])
+                     for user in usersStruct if user != currUserId]
+    compareEmbeddings(np.array(
+        [usersStruct[currUserId]["responses"]["3"]["embedding"]]), embeddingList)
 
     # with open('users.json', 'r') as file:
     #     usersStruct = json.load(file)
