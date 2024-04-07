@@ -12,27 +12,27 @@
     "responses": {
       "0": {
         "content": [1, 2],
-        "embedding": ""
+        "embedding": []
       },
       "1": {
         "content": [3, 4],
-        "embedding": ""
+        "embedding": []
       },
       "2": {
         "content": "",
-        "embedding": ""
+        "embedding": []
       },
       "3": {
         "content": "",
-        "embedding": ""
+        "embedding": []
       },
       "4": {
         "content": "",
-        "embedding": ""
+        "embedding": []
       },
       "5": {
         "content": "",
-        "embedding": ""
+        "embedding": []
       },
       "6": {
         "content": "",
@@ -48,15 +48,15 @@
       },
       "9": {
         "content": "",
-        "embedding": ""
+        "embedding": []
       },
       "10": {
         "content": "",
-        "embedding": ""
+        "embedding": []
       },
       "11": {
         "content": "",
-        "embedding": ""
+        "embedding": []
       },
       "12": {
         "content": "",
@@ -64,7 +64,7 @@
       },
       "13": {
         "content": "",
-        "embedding": ""
+        "embedding": []
       }
     },
     "leadingPrompt": ""
@@ -82,27 +82,27 @@
     "responses": {
       "0": {
         "content": [2, 3],
-        "embedding": ""
+        "embedding": []
       },
       "1": {
         "content": [4, 5, 6],
-        "embedding": ""
+        "embedding": []
       },
       "2": {
         "content": 0,
-        "embedding": ""
+        "embedding": []
       },
       "3": {
         "content": 8,
-        "embedding": ""
+        "embedding": []
       },
       "4": {
         "content": true,
-        "embedding": ""
+        "embedding": []
       },
       "5": {
         "content": false,
-        "embedding": ""
+        "embedding": []
       },
       "6": {
         "content": "I believe in the power of collective effort and wisdom. After a quick assessment of the situation, I'd gather my crew for a brief meeting to discuss our immediate steps and gather input. Recognizing that good ideas can come from anywhere, I'd also open the floor to suggestions from the passengers, involving them in the problem-solving process. This collaborative approach not only helps in finding innovative solutions but also keeps everyone engaged and calm, knowing they're part of a team effort to secure our safety.",
@@ -1147,15 +1147,15 @@
       },
       "9": {
         "content": true,
-        "embedding": ""
+        "embedding": []
       },
       "10": {
         "content": 3,
-        "embedding": ""
+        "embedding": []
       },
       "11": {
         "content": 6,
-        "embedding": ""
+        "embedding": []
       },
       "12": {
         "content": "I believe in finding a middle ground that respects both our needs. I'd start by suggesting quiet hours from 10:30 PM to 6:30 AM, but I'm open to discussing what works best for my roommate. Whether it's using earplugs or designating certain areas for late-night or early-morning activities, I'm sure we can come up with a plan that suits us both",
@@ -1506,7 +1506,7 @@
       },
       "13": {
         "content": false,
-        "embedding": ""
+        "embedding": []
       }
     },
     "leadingPrompt": "What is your star sign and how does it influence your personality?"
@@ -1524,27 +1524,27 @@
     "responses": {
       "0": {
         "content": [4, 6],
-        "embedding": ""
+        "embedding": []
       },
       "1": {
         "content": [11, 12],
-        "embedding": ""
+        "embedding": []
       },
       "2": {
         "content": 3,
-        "embedding": ""
+        "embedding": []
       },
       "3": {
         "content": 6,
-        "embedding": ""
+        "embedding": []
       },
       "4": {
         "content": false,
-        "embedding": ""
+        "embedding": []
       },
       "5": {
         "content": true,
-        "embedding": ""
+        "embedding": []
       },
       "6": {
         "content": "As the captain, my first priority is ensuring everyone's safety, so I'd calmly assess the damage and delegate tasks immediately. I'd assign a team to start manual water removal and another to patch up the leak with the onboard emergency repair kit. Meanwhile, I'd communicate clearly and calmly with the crew and passengers, explaining the situation and our action plan to prevent panic. I'd also set up a temporary command center where crew members can report progress and challenges. This approach not only solves the problem but maintains order and confidence among everyone on board",
@@ -2589,15 +2589,15 @@
       },
       "9": {
         "content": true,
-        "embedding": ""
+        "embedding": []
       },
       "10": {
         "content": 8,
-        "embedding": ""
+        "embedding": []
       },
       "11": {
         "content": 4,
-        "embedding": ""
+        "embedding": []
       },
       "12": {
         "content": "Honestly, my brain kicks into high gear after midnight, so my ideal quiet hours would start around 2 AM. If my roommate's an early bird, I'd use headphones for late-night activities and keep my work to my room. For shared quiet times, I think negotiating a window from 11 PM to 7 AM could work, adjusting as we find a rhythm that suits us both.",
@@ -2948,7 +2948,7 @@
       },
       "13": {
         "content": false,
-        "embedding": ""
+        "embedding": []
       }
     },
     "leadingPrompt": "What's your favorite way to unwind after a long day?"
@@ -2966,27 +2966,27 @@
     "responses": {
       "0": {
         "content": [10, 12],
-        "embedding": ""
+        "embedding": []
       },
       "1": {
         "content": [2, 3],
-        "embedding": ""
+        "embedding": []
       },
       "2": {
         "content": 7,
-        "embedding": ""
+        "embedding": []
       },
       "3": {
         "content": 4,
-        "embedding": ""
+        "embedding": []
       },
       "4": {
         "content": true,
-        "embedding": ""
+        "embedding": []
       },
       "5": {
         "content": false,
-        "embedding": ""
+        "embedding": []
       },
       "6": {
         "content": "Facing the unexpected challenge, I'd think outside the box. First, I'd use any available resources to slow the leak, perhaps fashioning a temporary seal from onboard materials. Next, I'd organize a brainstorming session with the crew, encouraging creative solutions to keep the ship afloat long enough for help to arrive. Communication with the passengers would be key\u00e2\u20ac\u201dI'd use this as an opportunity to foster a sense of community and teamwork, making them feel involved in the solution process. Together, we'd come up with a plan that's both effective and morale-boosting.",
@@ -4031,15 +4031,15 @@
       },
       "9": {
         "content": false,
-        "embedding": ""
+        "embedding": []
       },
       "10": {
         "content": 1,
-        "embedding": ""
+        "embedding": []
       },
       "11": {
         "content": 9,
-        "embedding": ""
+        "embedding": []
       },
       "12": {
         "content": "I treasure the peacefulness of early mornings, so I'd prefer quiet hours from 10 PM to 6 AM. This way, I can enjoy my morning routine without disturbance. If my roommate prefers staying up late, I'd suggest we create spaces in our home where they can be active at night without impacting the overall tranquility",
@@ -4390,7 +4390,7 @@
       },
       "13": {
         "content": true,
-        "embedding": ""
+        "embedding": []
       }
     },
     "leadingPrompt": "Whats your favourite food to cook and why?"
@@ -4408,27 +4408,27 @@
     "responses": {
       "0": {
         "content": [2, 9],
-        "embedding": ""
+        "embedding": []
       },
       "1": {
         "content": [3, 7],
-        "embedding": ""
+        "embedding": []
       },
       "2": {
         "content": 10,
-        "embedding": ""
+        "embedding": []
       },
       "3": {
         "content": 2,
-        "embedding": ""
+        "embedding": []
       },
       "4": {
         "content": false,
-        "embedding": ""
+        "embedding": []
       },
       "5": {
         "content": true,
-        "embedding": ""
+        "embedding": []
       },
       "6": {
         "content": "My approach would prioritize the emotional state of everyone on board. Acknowledging the fear and uncertainty, I'd address the crew and passengers personally, offering reassurance and a clear outline of our steps to safety. I'd organize small groups, led by crew members, to tackle different tasks, ensuring everyone feels they have a role and a stake in our collective safety. By fostering an environment of mutual support and understanding, I'd aim to keep morale high while we work together to overcome the challenge.",
@@ -5473,15 +5473,15 @@
       },
       "9": {
         "content": false,
-        "embedding": ""
+        "embedding": []
       },
       "10": {
         "content": 2,
-        "embedding": ""
+        "embedding": []
       },
       "11": {
         "content": 3,
-        "embedding": ""
+        "embedding": []
       },
       "12": {
         "content": "I'm pretty adaptable and can sleep through a fair bit, but I think it's fair to have quiet hours from 11 PM to 7 AM for both our sakes. If there are times when either of us needs more flexibility, like during exams or special projects, we can always have a chat and make temporary adjustments",
@@ -5832,7 +5832,7 @@
       },
       "13": {
         "content": true,
-        "embedding": ""
+        "embedding": []
       }
     },
     "leadingPrompt": "What is the meaning of life to you?"
