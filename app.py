@@ -2,7 +2,7 @@ import json
 from typing import Optional
 import numpy as np
 from dotenv import load_dotenv
-
+import logging
 from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS, cross_origin
 
@@ -86,7 +86,7 @@ def update_profile():
 # output: list of dict[**userprofile, compatibilityScore, qnsRanking, answer]
 
 
-@app.route("/user/profile", methods=["GET"])
+@app.route("/getprofile", methods=["POST"])
 @cross_origin()
 def get_profile():
     data = request.get_json()
@@ -96,6 +96,7 @@ def get_profile():
     user_ids = data["userIds"]
     userInformation = []
     for id in user_ids:
+        id = str(id)
         user = usersStruct[id]
         user["compatibilityScore"] = int(
             compatibilitiesStruct[currUserId][id]["compatibilityScore"])
@@ -135,7 +136,7 @@ def getQuestion() -> dict[int, Optional[str]]:
     return jsonify({"qnsType": qnsBank[qnsId]["type"], "content": qnsBank[qnsId]["qns"], "qnsId": qnsId})
 
 
-@app.route("/getRanking", methods=["GET"])
+@app.route("/getRanking", methods=["POST"])
 @cross_origin()
 def getRanking():
     data = request.get_json()
@@ -181,7 +182,7 @@ def submitAnswer() -> dict[int, Optional[str], Optional[int]]:
         print("LowWeightage", usersStruct[currUserId]["responses"][str(qnsId)])
     elif qnsId in nonNegotiableQns:  # blacklisting
         for user in usersStruct:
-            if user != currUserId and usersStruct[user]["responses"][str(qnsId)]["content"] != answer or usersStruct[user]["profile"]["Budget"] > 3 * usersStruct[currUserId]["profile"]["Budget"]:
+            if user != currUserId and usersStruct[user]["responses"][str(qnsId)]["content"] != answer or usersStruct[user]["profile"]["budget"] > 3 * usersStruct[currUserId]["profile"]["budget"]:
                 compatibilitiesStruct[currUserId][user]["isBlacklisted"] = True
                 print("Blacklisted user", user)
         # print("final compatiability", compatibilitiesStruct[currUserId])
@@ -200,11 +201,11 @@ def submitAnswer() -> dict[int, Optional[str], Optional[int]]:
         if qnsType == 2:  # free text qns content check
             print("free text qns", qnsBank[qnsId]["qns"], answer)
             chat = checkContent(qnsBank[qnsId]["qns"], answer)
-            isLong = chat["isEnough"]
-            prompt = chat["FollowUpPrompt"]
-            print(isLong, prompt)
-            if not isLong:
-                return jsonify({"status": 1, "prompt": prompt})
+            # isLong = chat["isEnough"]
+            # prompt = chat["FollowUpPrompt"]
+            # print(isLong, prompt)
+            # if not isLong:
+            #     return jsonify({"status": 1, "prompt": prompt})
             # generate embedding
             embedding = fastEmbedding(answer)
             usersStruct[currUserId]["responses"][str(qnsId)] = {
@@ -251,7 +252,7 @@ def getDirectRecommendation() -> dict[int, Optional[str]]:
     handle_cookie(cookie)
     currUserId = str(cookieBank[cookie]["userId"])
     if len(usersStruct[currUserId]["leadingPrompt"]) == 0:
-        return jsonify({"qnsType": 4})
+        return jsonify({"qnsType": 4, "qnsId": "999"})
     recommendations = getRecommendations(currUserId)
     filteredRecommendations = []
     for user in recommendations:
@@ -328,14 +329,14 @@ def getRecommendations(currUserId):
     return whiteListedTop  # TODO
 
 
-@app.after_request
-def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers',
-                         'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods',
-                         'GET,PUT,POST,DELETE,OPTIONS')
-    return response
+# @app.after_request
+# def after_request(response):
+#     response.headers.add('Access-Control-Allow-Origin', '*')
+#     response.headers.add('Access-Control-Allow-Headers',
+#                          'Content-Type,Authorization')
+#     response.headers.add('Access-Control-Allow-Methods',
+#                          'GET,PUT,POST,DELETE,OPTIONS')
+#     return response
 
 
 if __name__ == '__main__':
