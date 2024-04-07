@@ -35,15 +35,15 @@
         "embedding": ""
       },
       "6": {
-        "response": "",
+        "content": "",
         "embedding": []
       },
       "7": {
-        "response": "",
+        "content": "",
         "embedding": []
       },
       "8": {
-        "response": "",
+        "content": "",
         "embedding": []
       },
       "9": {
@@ -59,7 +59,7 @@
         "embedding": ""
       },
       "12": {
-        "response": "",
+        "content": "",
         "embedding": []
       },
       "13": {
@@ -105,7 +105,7 @@
         "embedding": ""
       },
       "6": {
-        "response": "I believe in the power of collective effort and wisdom. After a quick assessment of the situation, I'd gather my crew for a brief meeting to discuss our immediate steps and gather input. Recognizing that good ideas can come from anywhere, I'd also open the floor to suggestions from the passengers, involving them in the problem-solving process. This collaborative approach not only helps in finding innovative solutions but also keeps everyone engaged and calm, knowing they're part of a team effort to secure our safety.",
+        "content": "I believe in the power of collective effort and wisdom. After a quick assessment of the situation, I'd gather my crew for a brief meeting to discuss our immediate steps and gather input. Recognizing that good ideas can come from anywhere, I'd also open the floor to suggestions from the passengers, involving them in the problem-solving process. This collaborative approach not only helps in finding innovative solutions but also keeps everyone engaged and calm, knowing they're part of a team effort to secure our safety.",
         "embedding": [
           0.03220926970243454, -0.009349153377115726, -0.03339238837361336,
           0.03793318197131157, -0.004367439076304436, -0.040487609803676605,
@@ -452,7 +452,7 @@
         ]
       },
       "7": {
-        "response": "My immediate reaction would be to enforce a cleanup. I'd remind my roommate of our shared responsibility to maintain a clean space. For a recurring scenario, I'd suggest implementing consequences for not adhering to our agreed-upon cleanliness standards, like taking turns paying for a cleaning service",
+        "content": "My immediate reaction would be to enforce a cleanup. I'd remind my roommate of our shared responsibility to maintain a clean space. For a recurring scenario, I'd suggest implementing consequences for not adhering to our agreed-upon cleanliness standards, like taking turns paying for a cleaning service",
         "embedding": [
           -0.025627432391047478, -0.01925189048051834, -0.03044271469116211,
           0.02828781120479107, -0.03879857063293457, -0.018317095935344696,
@@ -799,7 +799,7 @@
         ]
       },
       "8": {
-        "response": "The perfect day would be filled with challenges and competition. Starting with a race or competitive sport, followed by a challenging escape room. Lunch would be at a place where we can play board games or trivia. The afternoon could involve a DIY project competition, with the evening capped by hosting a game night or poker tournament",
+        "content": "The perfect day would be filled with challenges and competition. Starting with a race or competitive sport, followed by a challenging escape room. Lunch would be at a place where we can play board games or trivia. The afternoon could involve a DIY project competition, with the evening capped by hosting a game night or poker tournament",
         "embedding": [
           0.019798582419753075, 0.01890791393816471, -0.014934128150343895,
           0.005719787906855345, -0.030371615663170815, -0.02980591356754303,
@@ -1158,7 +1158,7 @@
         "embedding": ""
       },
       "12": {
-        "response": "I believe in finding a middle ground that respects both our needs. I'd start by suggesting quiet hours from 10:30 PM to 6:30 AM, but I'm open to discussing what works best for my roommate. Whether it's using earplugs or designating certain areas for late-night or early-morning activities, I'm sure we can come up with a plan that suits us both",
+        "content": "I believe in finding a middle ground that respects both our needs. I'd start by suggesting quiet hours from 10:30 PM to 6:30 AM, but I'm open to discussing what works best for my roommate. Whether it's using earplugs or designating certain areas for late-night or early-morning activities, I'm sure we can come up with a plan that suits us both",
         "embedding": [
           0.01514457631856203, 0.015445135533809662, -0.04564152657985687,
           0.02266058512032032, -0.04718373715877533, -0.04999958351254463,
@@ -1547,7 +1547,7 @@
         "embedding": ""
       },
       "6": {
-        "response": "As the captain, my first priority is ensuring everyone's safety, so I'd calmly assess the damage and delegate tasks immediately. I'd assign a team to start manual water removal and another to patch up the leak with the onboard emergency repair kit. Meanwhile, I'd communicate clearly and calmly with the crew and passengers, explaining the situation and our action plan to prevent panic. I'd also set up a temporary command center where crew members can report progress and challenges. This approach not only solves the problem but maintains order and confidence among everyone on board",
+        "content": "As the captain, my first priority is ensuring everyone's safety, so I'd calmly assess the damage and delegate tasks immediately. I'd assign a team to start manual water removal and another to patch up the leak with the onboard emergency repair kit. Meanwhile, I'd communicate clearly and calmly with the crew and passengers, explaining the situation and our action plan to prevent panic. I'd also set up a temporary command center where crew members can report progress and challenges. This approach not only solves the problem but maintains order and confidence among everyone on board",
         "embedding": [
           0.012240096926689148, -0.011873132549226284, -0.0062563372775912285,
           0.008886112831532955, -0.029668215662240982, -0.02684403769671917,
@@ -1894,7 +1894,7 @@
         ]
       },
       "7": {
-        "response": "My immediate reaction would be disappointment, but I understand that everyone has off days. I'd clean up the mess this time and initiate a calm conversation with my roommate later. We'd discuss setting up a cleaning schedule that works for both of us. If the situation became recurring, I'd suggest revisiting our agreement and possibly implementing a chore chart to ensure fairness.",
+        "content": "My immediate reaction would be disappointment, but I understand that everyone has off days. I'd clean up the mess this time and initiate a calm conversation with my roommate later. We'd discuss setting up a cleaning schedule that works for both of us. If the situation became recurring, I'd suggest revisiting our agreement and possibly implementing a chore chart to ensure fairness.",
         "embedding": [
           -0.019809963181614876, -0.011725816875696182, -0.033130962401628494,
           0.012219262309372425, -0.047066815197467804, -0.02756659872829914,
@@ -2241,7 +2241,7 @@
         ]
       },
       "8": {
-        "response": "Our perfect day would start with a sunrise hike, enjoying nature and some photography. We'd then hit a local breakfast spot before trying out a workshop or class together, like pottery or cooking. The afternoon would be for exploring a museum or art gallery, followed by an evening at a live music venue or a movie under the stars. It's all about shared experiences and trying new thing",
+        "content": "Our perfect day would start with a sunrise hike, enjoying nature and some photography. We'd then hit a local breakfast spot before trying out a workshop or class together, like pottery or cooking. The afternoon would be for exploring a museum or art gallery, followed by an evening at a live music venue or a movie under the stars. It's all about shared experiences and trying new thing",
         "embedding": [
           0.012931465171277523, 0.02548552304506302, -0.009503563866019249,
           0.00379926641471684, -0.021707819774746895, -0.022199304774403572,
@@ -2600,7 +2600,7 @@
         "embedding": ""
       },
       "12": {
-        "response": "Honestly, my brain kicks into high gear after midnight, so my ideal quiet hours would start around 2 AM. If my roommate's an early bird, I'd use headphones for late-night activities and keep my work to my room. For shared quiet times, I think negotiating a window from 11 PM to 7 AM could work, adjusting as we find a rhythm that suits us both.",
+        "content": "Honestly, my brain kicks into high gear after midnight, so my ideal quiet hours would start around 2 AM. If my roommate's an early bird, I'd use headphones for late-night activities and keep my work to my room. For shared quiet times, I think negotiating a window from 11 PM to 7 AM could work, adjusting as we find a rhythm that suits us both.",
         "embedding": [
           0.0013068655971437693, 0.016904622316360474, -0.06000975891947746,
           0.004196719732135534, -0.027780603617429733, -0.04063256084918976,
@@ -2989,7 +2989,7 @@
         "embedding": ""
       },
       "6": {
-        "response": "Facing the unexpected challenge, I'd think outside the box. First, I'd use any available resources to slow the leak, perhaps fashioning a temporary seal from onboard materials. Next, I'd organize a brainstorming session with the crew, encouraging creative solutions to keep the ship afloat long enough for help to arrive. Communication with the passengers would be key\u00e2\u20ac\u201dI'd use this as an opportunity to foster a sense of community and teamwork, making them feel involved in the solution process. Together, we'd come up with a plan that's both effective and morale-boosting.",
+        "content": "Facing the unexpected challenge, I'd think outside the box. First, I'd use any available resources to slow the leak, perhaps fashioning a temporary seal from onboard materials. Next, I'd organize a brainstorming session with the crew, encouraging creative solutions to keep the ship afloat long enough for help to arrive. Communication with the passengers would be key\u00e2\u20ac\u201dI'd use this as an opportunity to foster a sense of community and teamwork, making them feel involved in the solution process. Together, we'd come up with a plan that's both effective and morale-boosting.",
         "embedding": [
           0.030340511351823807, 0.011369957588613033, -0.025046000257134438,
           0.04132625460624695, -0.018761681392788887, -0.02656136080622673,
@@ -3336,7 +3336,7 @@
         ]
       },
       "7": {
-        "response": "Initially, I'd feel annoyed but would probably clean it up myself to avoid confrontation. If it kept happening, I might start spending more time outside to dodge the mess. Talking about it feels uncomfortable, so I'd likely drop subtle hints and hope my roommate catches on",
+        "content": "Initially, I'd feel annoyed but would probably clean it up myself to avoid confrontation. If it kept happening, I might start spending more time outside to dodge the mess. Talking about it feels uncomfortable, so I'd likely drop subtle hints and hope my roommate catches on",
         "embedding": [
           -0.035035472363233566, 0.0013168618315830827, -0.020677758380770683,
           0.0033546644262969494, -0.033017709851264954, -0.038102541118860245,
@@ -3683,7 +3683,7 @@
         ]
       },
       "8": {
-        "response": "The ideal day would be a cozy one at home. We'd kick off with a homemade brunch, then dive into a movie marathon or a video game tournament. In the afternoon, we might tackle a joint DIY project or cook a new recipe together. The day would end with some stargazing from our balcony or backyard, just enjoying the quiet",
+        "content": "The ideal day would be a cozy one at home. We'd kick off with a homemade brunch, then dive into a movie marathon or a video game tournament. In the afternoon, we might tackle a joint DIY project or cook a new recipe together. The day would end with some stargazing from our balcony or backyard, just enjoying the quiet",
         "embedding": [
           -0.02870127186179161, 0.03643817454576492, -0.007857481949031353,
           -0.02239258773624897, -0.029629912227392197, -0.03744491934776306,
@@ -4042,7 +4042,7 @@
         "embedding": ""
       },
       "12": {
-        "response": "I treasure the peacefulness of early mornings, so I'd prefer quiet hours from 10 PM to 6 AM. This way, I can enjoy my morning routine without disturbance. If my roommate prefers staying up late, I'd suggest we create spaces in our home where they can be active at night without impacting the overall tranquility",
+        "content": "I treasure the peacefulness of early mornings, so I'd prefer quiet hours from 10 PM to 6 AM. This way, I can enjoy my morning routine without disturbance. If my roommate prefers staying up late, I'd suggest we create spaces in our home where they can be active at night without impacting the overall tranquility",
         "embedding": [
           0.009187166579067707, 0.011581942439079285, -0.04644906893372536,
           -0.01717117428779602, -0.043738044798374176, -0.05177322030067444,
@@ -4431,7 +4431,7 @@
         "embedding": ""
       },
       "6": {
-        "response": "My approach would prioritize the emotional state of everyone on board. Acknowledging the fear and uncertainty, I'd address the crew and passengers personally, offering reassurance and a clear outline of our steps to safety. I'd organize small groups, led by crew members, to tackle different tasks, ensuring everyone feels they have a role and a stake in our collective safety. By fostering an environment of mutual support and understanding, I'd aim to keep morale high while we work together to overcome the challenge.",
+        "content": "My approach would prioritize the emotional state of everyone on board. Acknowledging the fear and uncertainty, I'd address the crew and passengers personally, offering reassurance and a clear outline of our steps to safety. I'd organize small groups, led by crew members, to tackle different tasks, ensuring everyone feels they have a role and a stake in our collective safety. By fostering an environment of mutual support and understanding, I'd aim to keep morale high while we work together to overcome the challenge.",
         "embedding": [
           0.04231557250022888, -0.000795881962403655, -0.03355750814080238,
           0.02461942471563816, -0.002105685416609049, -0.03585230931639671,
@@ -4778,7 +4778,7 @@
         ]
       },
       "7": {
-        "response": "I'd be straight up frustrated and wouldn't hesitate to address it immediately. I believe in tackling issues head-on, so I'd tell my roommate it's not okay and we need to find a solution right away. Recurring issues? I'd propose stricter rules or even consider if we're compatible as roommates.",
+        "content": "I'd be straight up frustrated and wouldn't hesitate to address it immediately. I believe in tackling issues head-on, so I'd tell my roommate it's not okay and we need to find a solution right away. Recurring issues? I'd propose stricter rules or even consider if we're compatible as roommates.",
         "embedding": [
           -0.007651155814528465, -0.016399439424276352, -0.007430111989378929,
           0.02770303562283516, -0.031455084681510925, -0.013424561358988285,
@@ -5125,7 +5125,7 @@
         ]
       },
       "8": {
-        "response": "From dawn till dusk, our day would be packed with social activities. Starting with a group workout class, followed by brunch with friends. We'd organize a beach volleyball match or a group hike, then head to a popular restaurant. The evening would involve a party or a bar crawl, making new friends and creating memories",
+        "content": "From dawn till dusk, our day would be packed with social activities. Starting with a group workout class, followed by brunch with friends. We'd organize a beach volleyball match or a group hike, then head to a popular restaurant. The evening would involve a party or a bar crawl, making new friends and creating memories",
         "embedding": [
           0.014169489964842796, 0.045998793095350266, -0.024269046261906624,
           0.026410050690174103, -0.013670348562300205, -0.029035039246082306,
@@ -5484,7 +5484,7 @@
         "embedding": ""
       },
       "12": {
-        "response": "I'm pretty adaptable and can sleep through a fair bit, but I think it's fair to have quiet hours from 11 PM to 7 AM for both our sakes. If there are times when either of us needs more flexibility, like during exams or special projects, we can always have a chat and make temporary adjustments",
+        "content": "I'm pretty adaptable and can sleep through a fair bit, but I think it's fair to have quiet hours from 11 PM to 7 AM for both our sakes. If there are times when either of us needs more flexibility, like during exams or special projects, we can always have a chat and make temporary adjustments",
         "embedding": [
           0.0016783897299319506, 0.012195443734526634, -0.053054794669151306,
           0.012254627421498299, -0.0472465418279171, -0.045437172055244446,
