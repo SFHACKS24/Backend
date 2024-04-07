@@ -104,6 +104,7 @@ def get_profile():
         while len(user["qnsRanking"]) < numQns:
             user["qnsRanking"].append(3)
         user["answer"] = str(compatibilitiesStruct[currUserId][id]["answer"])
+        user["summary"]=getSummary(id)
         userInformation.append(user)
     return jsonify(userInformation)
 
