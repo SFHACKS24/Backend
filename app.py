@@ -134,6 +134,7 @@ def getQuestion() -> dict[int, Optional[str]]:
         return jsonify({"qnsType": 6, "content": onlyRanking})
     return jsonify({"qnsType": qnsBank[qnsId]["type"], "content": qnsBank[qnsId]["qns"], "qnsId": qnsId})
 
+
 @app.route("/getRanking", methods=["GET"])
 @cross_origin()
 def getRanking():
@@ -256,8 +257,9 @@ def getDirectRecommendation() -> dict[int, Optional[str]]:
     for user in recommendations:
         userId = str(user[0])
         if user[1]["answerable"] == False:  # add leading prompts
-            #return jsonify(({"qnsType": 5, "userId": userId, "content": user[1]["leadingPrompts"], "qnsId": userId}))
-            chat= getAnswerability("2", user[1]["leadingPrompts"]) #TODO change back
+            # return jsonify(({"qnsType": 5, "userId": userId, "content": user[1]["leadingPrompts"], "qnsId": userId}))
+            chat = getAnswerability(
+                "2", user[1]["leadingPrompts"])  # TODO change back
             print(chat)
             if chat["isAnswerable"]:
                 compatibilitiesStruct[currUserId][userId]["answerable"] = True
@@ -324,6 +326,16 @@ def getRecommendations(currUserId):
     whiteListedTop = [user for user in top5 if user[1]
                       ["isBlacklisted"] == False]
     return whiteListedTop  # TODO
+
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers',
+                         'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods',
+                         'GET,PUT,POST,DELETE,OPTIONS')
+    return response
 
 
 if __name__ == '__main__':

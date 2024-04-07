@@ -4,10 +4,10 @@
       "name": "user0 name",
       "gender": "user0 gender",
       "age": "user0 age",
-      "Occupation/School": "user0 Occupation/School",
-      "Location": "user0 Location",
-      "Budget": 1000,
-      "Do you have a room?": true
+      "occupation": "user0 occupation",
+      "location": "user0 location",
+      "budget": 1000,
+      "room": true
     },
     "responses": {
       "0": {
@@ -74,10 +74,10 @@
       "name": "Aaron",
       "gender": "Male",
       "age": 24,
-      "Occupation/School": "SUTD",
-      "Location": "Berkeley,CA",
-      "Budget": 1000,
-      "Do you have a room?": true
+      "occupation": "SUTD",
+      "location": "Berkeley,CA",
+      "budget": 1000,
+      "room": true
     },
     "responses": {
       "0": {
@@ -1516,10 +1516,10 @@
       "name": "Yu Fei",
       "gender": "Male",
       "age": 23,
-      "Occupation/School": "NTU",
-      "Location": "Berkeley,CA",
-      "Budget": 1400,
-      "Do you have a room?": false
+      "occupation": "NTU",
+      "location": "Berkeley,CA",
+      "budget": 1400,
+      "room": false
     },
     "responses": {
       "0": {
@@ -2958,10 +2958,10 @@
       "name": "XiaoWen",
       "gender": "Female",
       "age": 22,
-      "Occupation/School": "UC Berkeley",
-      "Location": "Berkeley,CA",
-      "Budget": 1200,
-      "Do you have a room?": true
+      "occupation": "UC Berkeley",
+      "location": "Berkeley,CA",
+      "budget": 1200,
+      "room": true
     },
     "responses": {
       "0": {
@@ -4400,10 +4400,10 @@
       "name": "Jacoba",
       "gender": "Female",
       "age": 25,
-      "Occupation/School": "Cinematic Arts",
-      "Location": "Berkeley,CA",
-      "Budget": 10000,
-      "Do you have a room?": true
+      "occupation": "Cinematic Arts",
+      "location": "Berkeley,CA",
+      "budget": 10000,
+      "room": true
     },
     "responses": {
       "0": {
