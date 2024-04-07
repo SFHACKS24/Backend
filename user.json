@@ -3,7 +3,7 @@
     "profile": {
       "name": "user0 name",
       "gender": "user0 gender",
-      "age": "user0 age",
+      "age": 24,
       "occupation": "user0 occupation",
       "location": "user0 location",
       "budget": 1000,
