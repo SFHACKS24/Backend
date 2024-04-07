@@ -82,6 +82,8 @@ def getUersInformation():
         user = usersStruct[id]
         user["compatibilityScore"] = int(compatibilitiesStruct[currUserId][id]["compatibilityScore"])
         user["qnsRanking"] = compatibilitiesStruct[currUserId][id]["qnsRanking"]
+        while len(user["qnsRanking"])<numQns:
+            user["qnsRanking"].append(3)
         user["answer"] = str(compatibilitiesStruct[currUserId][id]["answer"])
         userInformation.append(user)
     return jsonify(userInformation)
