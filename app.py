@@ -1,6 +1,3 @@
-import json
-from typing import Optional
-import numpy as np
 from dotenv import load_dotenv
 import logging
 from flask import Flask, jsonify, request, send_file
@@ -15,10 +12,11 @@ from flask import Flask
 from flask_smorest import Api
 from flask_migrate import Migrate
 
+from resources.qnsInfo import blp as qnsInfo_blp
+from resources.response import blp as response_blp
 from resources.user import blp as user_blp
-from resources.qnsBank import blp as qnsBank_blp
-from resources.qnsResponse import blp as qnsResponse_blp
-from resources.custom import blp as custom_blp
+from resources.backend import blp as backend_blp
+from resources.cookie import blp as cookie_blp
 
 from db import db
 import os
@@ -49,9 +47,10 @@ def create_app(db_url=None):
         db.create_all()
         
     api.register_blueprint(user_blp)
-    api.register_blueprint(qnsBank_blp)
-    api.register_blueprint(qnsResponse_blp)
-    api.register_blueprint(custom_blp)
+    api.register_blueprint(qnsInfo_blp)
+    api.register_blueprint(response_blp)
+    api.register_blueprint(backend_blp)
+    api.register_blueprint(cookie_blp)
 
     return app
 
