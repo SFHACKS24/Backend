@@ -11,27 +11,30 @@ class PlainUserSchema(Schema):
     budget=fields.Int(required=True)
     hasRoom=fields.Bool(required=True)
 
-
-class QnsBankSchema(Schema):
+class QnsInfoSchema(Schema):
     id = fields.Str(dump_only=True)
     question=fields.Str(required=True)
     type=fields.Int(required=True)
 
-class StdResponsesSchema(Schema):
+class CustomQnsInfoSchema(QnsInfoSchema):
+    questionerId=fields.Str(required=False)
+
+class ResponseSchema(Schema):
     id = fields.Str(dump_only=True)
+    response=fields.Str(required=True)
+    userId=fields.Str(required=True)
     qnsId=fields.Str(required=True)
-    userId=fields.Str(required=True)
-    response=fields.Str(required=True)
-    encoding=fields.List(fields.Int)
 
-class CustomQnsSchema(Schema):
-    id = fields.Str(dump_only=True)
-    question=fields.Str(required=True)
-    questionerId=fields.Str(required=True)
+class StructuredResponseSchema(ResponseSchema):
+    encoding=fields.Raw(required=False)
 
-class CustomResponsesSchema(Schema):
-    id = fields.Str(dump_only=True)
-    questionerId=fields.Str(required=True)
-    userId=fields.Str(required=True)
-    response=fields.Str(required=True)
-    encoding=fields.List(fields.Int)
+class UserSchema(PlainUserSchema):
+    userResponses=fields.List(fields.Nested(ResponseSchema), required=False)
+    posedQns=fields.Nested(CustomQnsInfoSchema, required=False)
+
+class CookieSchema(Schema):
+    id=fields.Str(dump_only=True)
+    userId= fields.Str(required=True)
+    currentProgress= fields.Int(required=True)
+    isCompleted=fields.Bool(required=True)
+    hasDirectRecommendation=fields.Bool(required=True)
